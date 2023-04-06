@@ -1,91 +1,74 @@
 import Image from 'next/image'
+
+import leafBackground from '../../public/leafs-backgrounds.jpg'
+
 import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+
+import './page.scss'
+
+import { NavBar } from '@/components/NavBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div id="Home">
+      <NavBar />
 
-      <div className={styles.center}>
+      <div className="Introduction">
         <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
+          className=''
+          src={leafBackground}
+          width={1200}
+          height={800}
+          alt='Leafs'
+          style={{position: 'absolute', zIndex: 1,}}
           priority
         />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
+        <div className="Introduction__heading">
+          <h1 className="Introduction__heading__text">Mercantte</h1>
+          <p>Contact with us and explore our fantastics products</p>
         </div>
+
+        <div className="Introduction__content"></div>
+
+        <button className="Introduction__button">Our Collection</button>
+
       </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      {/*<section className='Workshop'>
+        <div className="Workshop__title">
+          <h1 className="Workshop__title__text"></h1>
+          <p className="Workshop__title__content"></p>
+          <img className="Workshop__title__image" src="" alt=""/>
+        </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
+        <div className="Workshop__content">
+          <div className="Card">
+            <img className="Card__image" src="" alt="" />
+            <div className="Card__info">
+              <p className="Card__info__product-name"></p>
+              <strong className="Card__info__price"></strong>
+            </div>
+          </div>
+        </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    
+      </section>
+
+      <footer className="Footer">
+        <div className="Footer-horizontal-bar"></div>
+
+        <div className="Footer__content">
+          <div className="Footer__content__logo"></div>
+
+          <div className="Footer__content__discovery"></div>
+          <div className="Footer__content__about"></div>
+          <div className="Footer__content__contact-us"></div>
+        </div>
+
+      </footer> */}
+
+    </div>
   )
 }
