@@ -1,5 +1,8 @@
-import { FONTS } from "@/constants/fonts"
+"use client";
+
 import { ButtonHTMLAttributes, ReactNode } from "react"
+
+import { FONTS } from "@/constants/fonts"
 
 
 type ButtonProps = {
@@ -7,7 +10,7 @@ type ButtonProps = {
   children: ReactNode
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-function Button({
+export default function Button({
   buttonTypes,
   children,
   className,
@@ -17,19 +20,14 @@ function Button({
   function handleCostumizableStyles() {
     switch(buttonTypes) {
       case 'callToAction':
-        return "bg-secondary text-white "
-      case undefined:
-        return "bg-transparent border-2 border-white text-white"
+        return "bg-secondary text-white";
       case 'buy':
-        return "bg-transparent border-primary border-2 text-primary"
+        return "bg-transparent border-primary border-2 text-primary";
       default:
-        return
+        return "bg-transparent border-2 border-white text-white";
   
     }
-
   }
 
-  return <button className={`${handleCostumizableStyles()} px-8 py-4 ${FONTS.BODY} `} {...props}>{children}</button>
+  return <button className={`${handleCostumizableStyles()} ${className} px-8 py-4 ${FONTS.BODY} `} {...props}>{children}</button>
 }
-
-export default Button

@@ -3,6 +3,18 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.cloudfront.net",
+      },
+      {
+        protocol: "https",
+        hostname: "bs.plantnet.org",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

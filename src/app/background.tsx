@@ -1,5 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
+
 export default function Background() {
-  return <div className=" h-[1000px] absolute w-full -translate-x-1/2 left-1/2 overflow-y-hidden -z-10 bg-leaf bg-fixed bg-no-repeat bg-cover bg-center" />
+  return (
+    <Suspense fallback={ <div className="bg-cyan-50 h-full w-full" /> } >
+      <div className="h-[1000px] absolute w-full -translate-x-1/2 left-1/2 -z-10 mix-blend-multiply bg-blend-lighten bg-primary bg-leaf bg-cover bg-top" />
+    </Suspense>
+  )
 }

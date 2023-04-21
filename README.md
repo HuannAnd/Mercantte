@@ -1,6 +1,6 @@
 # Mercantte
 
-## My first Web Site
+## My first Website
 
 
 This project its my first <strong>Landing Page</strong>, itself is a basic landing page to marketing, wich im putting in practice the basics<em> Marketing Practices </em> and also ilustrate my personal works, as my pattern of <em>UI/UX</em>
@@ -20,7 +20,7 @@ This project its my first <strong>Landing Page</strong>, itself is a basic landi
 
 Techcnicals informations(data): [Treefle](https://trefle.io/ "Simple API to catch datas of plants")
 
-Tool im used to create UI components and general style: [Figma](https://trefle.io/ "best tool to make modern designs web sites, and mobile")
+Tool im used to create UI components and general style: [Figma](https://trefle.io/ "best tool to make modern designs websites, and mobile")
 
 
 

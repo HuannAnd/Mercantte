@@ -10,7 +10,6 @@ export default function Summary() {
       <Benefit
         title="Our best-sellers"
         date="January, 23 of may"
-        isRight
         key={1}
 
       >
@@ -25,7 +24,7 @@ export default function Summary() {
       <Benefit
         title="Why we want inovatte the seeds comerce"
         date="December, 23 of 2022"
-
+        isRight
         key={2}
 
       >
