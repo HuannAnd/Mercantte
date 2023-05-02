@@ -11,6 +11,7 @@ export default function Summary() {
         title="Our best-sellers"
         date="January, 23 of may"
         key={1}
+        imageIndex="3"
 
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla ligula, maximus sed hendrerit posuere, auctor eu nibh. Etiam vel erat nulla. Cras eget placerat libero, eget luctus tellus. Phasellus scelerisque lectus vitae aliquam vulputate. In tincidunt nulla ac purus auctor aliquam. Praesent non luctus purus. Praesent pretium cursus ipsum, eu condimentum dui bibendum non.
@@ -19,13 +20,14 @@ export default function Summary() {
         Donec bibendum libero eget mollis laoreet. Sed consectetur ultricies nisi, at cursus turpis aliquet in. Morbi at lectus id sem lacinia scelerisque. Vestibulum cursus convallis porta. Nam libero sapien, lacinia fringilla sapien vel, efficitur sagittis justo.
       </Benefit>
 
-      <div className="relative w-full h-[1px] bg-green-900"></div>
+      <div className="relative w-full h-[1px] bg-white"></div>
 
       <Benefit
         title="Why we want inovatte the seeds comerce"
         date="December, 23 of 2022"
         isRight
         key={2}
+        imageIndex="2"
 
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla ligula, maximus sed hendrerit posuere, auctor eu nibh. Etiam vel erat nulla. Cras eget placerat libero, eget luctus tellus. Phasellus scelerisque lectus vitae aliquam vulputate. In tincidunt nulla ac purus auctor aliquam. Praesent non luctus purus. Praesent pretium cursus ipsum, eu condimentum dui bibendum non.
@@ -36,7 +38,7 @@ export default function Summary() {
 
 
 
-      <div className="relative w-full h-[1px] bg-green-900"></div>
+      <div className="relative w-full h-[1px] bg-white"></div>
 
     </div>
   )

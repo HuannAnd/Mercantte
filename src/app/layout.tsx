@@ -1,9 +1,10 @@
+import './globals.css';
+
 import { ReactNode } from "react";
 
 import { Inter } from "next/font/google";
 
-import './globals.css';
-
+import Footer from './footer';
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -18,11 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-inter bg-radial `}>
+      <body className={`${inter.variable} font-inter bg-radial relative`}>
         <div className="overflow-x-hidden w-screen relative flex justify-center">
           {children}
         </div>
-        <footer></footer>
       </body>
     </html>
   )

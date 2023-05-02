@@ -12,8 +12,8 @@ module.exports = {
         "carousel-fade-effect": 'linear-gradient(90deg, white , transparent, white);'
       },
       colors: {
-        'primary': "#392D2E",
-        'secondary': "#174020",
+        'primary': "#5D7867",
+        'secondary': "#8A9CA0",
       },
       boxShadow: {
         'main': "0 0 10vw #392D2E",

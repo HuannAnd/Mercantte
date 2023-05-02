@@ -18,23 +18,21 @@ export default function Sales({ plants, ...props }: SalesProps) {
   return (
     <>
       <div {...props} className='p-10'>
-        <h1 className={`${FONTS.H1} font-inter text-center text-white mx-auto`}>Products</h1>
-        <p className={`${FONTS.BODY} text-center mx-auto text-white opacity-60`}>View some of our products, in sale</p>
+        <h1 className={`${FONTS.H1} font-inter text-center text-white mx-auto`}>Plants</h1>
+        <p className={`${FONTS.BODY} text-center mx-auto text-white opacity-60`}>View some plants, around the world</p>
       </div>
 
       <div className="w-full h-auto flex px-4 flex-wrap gap-x-4 gap-y-4 justify-center mb-4" >
         {!plants ? (
           <h1>Loading...</h1>
         ) : (
+          plants.map((plant, index) => index < 4 ? (
+            <Product
+              key={plant.id}
+              plant={plant}
+            />
+          ) : null
           
-          plants.map((plant) => {
-            return (
-              <Product
-                key={plant.id}
-                plant={plant}
-              />
-            )
-          }
           )
         )}
       </div>

@@ -18,14 +18,14 @@ export default function Button({
 }: ButtonProps) {
 
   function handleCostumizableStyles() {
-    switch(buttonTypes) {
+    switch (buttonTypes) {
       case 'callToAction':
         return "bg-secondary text-white";
       case 'buy':
-        return "bg-transparent border-primary border-2 text-primary";
+        return "bg-primary border-primary border-2 text-white duration-300 hover:bg-transparent hover:text-primary ";
       default:
         return "bg-transparent border-2 border-white text-white";
-  
+
     }
   }
 
