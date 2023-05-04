@@ -1,12 +1,10 @@
-import { MongoClient } from 'mongodb';
+import { WithId, ObjectId } from 'mongodb';
 import { BaseRepository } from './baseRepository'
+import { PlantDocument } from '@/@types/plant';
 
-import Plant from '@/models/Plant';
-
-
-export class PlantsRepository extends BaseRepository<typeof Plant> {
+class PlantsRepository extends BaseRepository<PlantDocument> {
   constructor() {
-    super('plants');
+    super('Plants');
   }
 
   public async add(newPlant: any): Promise<void> {
@@ -14,32 +12,37 @@ export class PlantsRepository extends BaseRepository<typeof Plant> {
     await collection.insertOne(newPlant);
   }
 
+  // Essa função será usada na rota: app/plants/page.tsx , para carregar o conteúdo desta página
+  public async getById(id: ObjectId): Promise<PlantDocument> {
+    const plant = await this.findById(id);
 
-  public async get(id: any): Promise<any> {
-    return this.getById(id);
+    if (!plant) {
+      throw new Error("Error to get that plant, please check the provided id");
+    }
+
+    return plant;
   }
 
-  public async getAll() {
-    const plants = await Plant.find();
+  public async getAll(): Promise<WithId<PlantDocument>[]> {
+    const collection = this.repository.collection<PlantDocument>(this.collectionName);
+    const allPlants = collection.find().toArray();
+
+    return allPlants;
+  }
+
+  public async getAllByFamilyName(familyName: string) {
+    const plants = await this.findAll({}, { projection: { familyName: familyName } });
+
+    if (plants.length === 1) {
+      console.info("Does not exist another plant in the same family");
+    }
 
     return plants;
   }
 
-  public async getByFamily(familyName: string) {
-    const collection = this.repository.collection('Plants');
-    const result = await collection.findOne({ family: familyName });
-
-    return result;
-  }
-
-  public async getAllByFamilyName(familyName: string): Promise<any[]> {
-    const collection = this.repository.collection(this.collectionName);
-    const result = collection.find({ family: familyName });
-
-    return result.toArray()
-  }
-
-  public async deletePlant() {
-    await this.delete({ family: 'Vicente' });
+  public async delete() {
+    await this.remove({ family: 'Vicente' });
   }
 }
+
+export default new PlantsRepository();

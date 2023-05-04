@@ -1,8 +1,7 @@
 import { PlantIdBody } from "@/@types/plantId";
 import { PLANT_ID_URL } from "@/constants/baseURLs";
-import { log } from "console";
 
-// Deprecated
+// Deprecated;
 
 export async function getPlantDetailsWithPlantId(base64Image?: string) {
   try {

@@ -1,6 +1,8 @@
 import { OPENAI_BASE_URL } from '@/constants/baseURLs';
 
-export default async function (plantName: string) {
+// TODO: Fazer um trycatch para todas as funcões getPlant***() para lidar melhor com os erros.
+
+export default async function getPlantIrrigationDetails(plantName: string) {
   const prompt = `Write some details about the irrigation requirements for ${plantName}.`;
   const response = await fetch(OPENAI_BASE_URL + "/engines/text-davinci-002/completions", {
     method: 'POST',

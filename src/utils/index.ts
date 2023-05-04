@@ -1,8 +1,7 @@
-import { getPlantData } from "./getPlantData"
+import { getPlantData } from "./getPlantNames"
 import { convertImageToBase64 } from "./convertImageToBase64"
 import { getSimillarsFamilyPlants } from './getSimillarsFamilyPlants'
 import { getPlantDetailsWithPlantId } from './getPlantDetailsWithPlantId'
-import { getPlantInfo } from './getPlantDescription'
 
 export {
   getPlantData,

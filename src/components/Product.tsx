@@ -7,24 +7,22 @@ import { Button } from "@/components";
 
 import { FONTS } from '@/constants/fonts'
 
-import { PlantData } from "@/@types/trefle";
+import { PlantDocument } from "@/@types/plant";
 
 
 type ProductProps = {
-  plant: PlantData;
+  plant: Omit<PlantDocument, "_id"> & { _id: string };
   className?: string,
 
 }
 
 function Product({ plant, className }: ProductProps) {
   const {
-    scientific_name,
+    _id,
     image_url,
-    slug,
-    id,
-    family_common_name,
-    author,
-    bibliography
+    name,
+    description,
+    family
   } = plant;
 
 
@@ -34,36 +32,30 @@ function Product({ plant, className }: ProductProps) {
         <Image
           className='bg-center mx-auto h-full object-cover  '
           src={image_url}
-          alt={`Image of ${scientific_name}`}
+          alt={`Image of ${name}`}
 
           width={200}
           height={300}
         />
       </div>
       <div className="">
-        <h3 className={`${FONTS.BOLD} text-center mb-2 italic`}>{scientific_name}</h3>
+        <h3 className={`${FONTS.BOLD} text-center mb-2 italic`}>{name}</h3>
         <div className="mb-8">
           <p className={'w-full relative'}>
             <strong>Family</strong>{""}
-            {family_common_name}
+            {family}
             <br />
-            <strong>Author</strong>{" "}
-            <q>{author}</q>
-            <br />
-            <strong>Biblio.</strong>
-            {bibliography}
+            <strong>Description</strong>{" "}
+            <q>{description}</q>
           </p>
-
         </div>
-        <Link href={`/plants/${Number(id)}?plant_id=${Number(id)}`}>
+        <Link href={`/plants/${_id}?plant_id=${_id}`}>
           <Button
             className="w-full uppercase block px-8 py-4 font-medium tracking-widest"
             buttonTypes="buy"
           >Learn More</Button>
         </Link>
-
       </div>
-
     </div>
   )
 }

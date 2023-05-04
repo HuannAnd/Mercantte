@@ -1,22 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { PlantsRepository } from "@/repositories/plantsRepositories";
+import PlantsRepository from "@/repositories/plantsRepositories";
 
-import getChatGPTInfo from "@/utils/getPlantDescription";
-import getPlantInfo from "@/utils/getPlantDescription";
+import getPlantIrrigationsDetails from "@/utils/getPlantIrrigationsDetails";
+import getPlantDescription from "@/utils/getPlantDescription";
+import getPlantCareDetails from "@/utils/getPlantCareDetails";
 
-const PLANT_CONTROLLER = new PlantsRepository();
+import { PlantDocument } from "@/@types/plant";
+import { WithId } from "mongodb";
+
+// TODO: Iniciar a ideia do POST para o banco de dados
 
 export async function GET(request: Request) {
   try {
     const { searchParams, pathname } = new URL(request.url);
 
-    // Se quando usado o parâmetro family_name se ele existe então a API entende que está fazendo a requisição das familias
-    // para um request na rota: /api/plants/family?family_name=...
+    //Se quando usado o parâmetro family_name se ele existe então a API entende que está fazendo a requisição das familias
+    //para um request na rota: /api/plants/family?family_name=...
     if (pathname.includes("/family")) {
       if (searchParams.has("family_name")) {
         const familyName = searchParams.get("family_name");
-        const data = PLANT_CONTROLLER.getAllByFamilyName(familyName!);
+        const data = await PlantsRepository.getAllByFamilyName(familyName!);
 
         return NextResponse.json({ message: 'Success', data });
       }
@@ -27,8 +31,8 @@ export async function GET(request: Request) {
       });
     }
 
-    // caso nenhuma rota seja expecificada teremos um GET de todas as plantas no banco de dados
-    const data = await PLANT_CONTROLLER.getAll();
+    //caso nenhuma rota seja expecificada teremos um GET de todas as plantas no banco de dados
+    const data = await PlantsRepository.getAll();
 
     if (!data) {
       throw new Error("The plants collection is empty");
@@ -52,28 +56,34 @@ export async function POST(request: Request) {
     // const body = {
     //   name: plantName,
     //   description,
+    //   careDetails,
+    //   irrigationDetails,
     //   watering_details: wateringDetails,
     //   ...
     // }
 
-    if (searchParams.has("plant_name")) {
-      if (!plantName) {
-        return NextResponse.json({
-          message: "The plant_name param is null or undefined",
-          error: true,
-        });
-      }
-      // coletando os dados para fazer o POST, dados que precisam do body
-      const description = await getPlantInfo(plantName);
+    // if (searchParams.has("plant_name")) {
+    //   if (!plantName) {
+    //     return NextResponse.json({
+    //       message: "The plant_name param is null or undefined",
+    //       error: true,
+    //     });
+    //   }
+    //   // coletando os dados para fazer o POST, dados que precisam do body
+    //   const description = await getPlantDescription(plantName);
+    //   const careDetails = await getPlantCareDetails(plantName);
+    //   const irrigationDetails = await getPlantIrrigationsDetails(plantName);
+
+    //   // 
 
 
-    }
 
-    if (!plantName) {
-      throw new Error("The param plant_name doesnt be passed")
-    }
 
-    const chatResponse = await getChatGPTInfo(plantName);
+
+    // }
+
+
+
 
   } catch (error) {
 

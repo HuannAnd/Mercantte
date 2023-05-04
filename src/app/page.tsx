@@ -9,6 +9,8 @@ import Image from "next/image"
 
 import { PlantData } from "@/@types/trefle"
 
+import PlantsRepository from '@/repositories/plantsRepositories'
+
 
 async function getPlantsData() {
   try {
@@ -24,8 +26,15 @@ async function getPlantsData() {
 }
 
 export default async function Page() {
+  // Deprecated
+  /*
   const plants = await getPlantsData();
+  */
 
+  // Lembrando que não temos os dados das plantas ainda(como deveria);
+  const plants = await PlantsRepository.getAll(); 
+
+  
 
   return (
     <>

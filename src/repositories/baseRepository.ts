@@ -1,9 +1,13 @@
-import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions } from "mongodb";
-
+import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId } from "mongodb";
+import { BaseDocument } from '@/@types/common'
 
 // O T enviado tem que vir no formato Document do mongo por isso o extends Document, entendi sua ideia. Aqui a gente tá trabalhando, por enquanto somente com 
 // o schema Plant, porém, caso exista uma collection User, por exemplo, isso se generalizará para User também. Permitindo que a gente trabalhe com várias coleções.
-export abstract class BaseRepository<T extends Document> {
+
+/*
+  Toda BaseRepository recebe um T que será um Model que fará as operações do banco. 
+*/
+export abstract class BaseRepository<TSchema extends BaseDocument> {
   protected repository: Db;
   protected collectionName: string;
 
@@ -18,30 +22,33 @@ export abstract class BaseRepository<T extends Document> {
     this.collectionName = collectionName;
   }
 
-  protected async getById(id: any) {
-    const collection = this.repository.collection(this.collectionName);
-    const result = await collection.findOne({ _id: id });
+  protected async findById(id: ObjectId): Promise<TSchema | undefined> {
+    const collection = this.repository.collection<TSchema>(this.collectionName);
+    const result = await collection.findOne({}, { projection: { id: id } });
 
-    return result
+    return this.serialize(result);
   }
 
-  protected async getAll(filter: Filter<T>, options?: FindOptions<T>): Promise<WithId<Document>[]> {
-    const collection = this.repository.collection(this.collectionName)
-    const data = collection.find(filter as Filter<Document>, options)
+  protected async findAll(filter?: Filter<TSchema>, options?: FindOptions<TSchema>): Promise<TSchema[]> {
+    const collection = this.repository.collection<TSchema>(this.collectionName);
+    const data = await collection.find(filter as Filter<Document>, options).toArray();
 
-    return data.toArray()
+    return data.map(x => this.serialize(x)!);
   }
 
-  protected async add(data: T): Promise<void> /*Promise<InsertOneResult<Document?>>*/ {
-    const collection = this.repository.collection(this.collectionName);
-    await collection.insertOne(data);
-
+  protected async add(data: TSchema): Promise<void> {
+    const collection = this.repository.collection<TSchema>(this.collectionName);
+    await collection.insertOne(data as any);
   }
 
-
-  protected async delete(filter: Filter<T>, options?: DeleteOptions) {
-    const collection = this.repository.collection(this.collectionName);
+  protected async remove(filter: Filter<TSchema>, options?: DeleteOptions) {
+    const collection = this.repository.collection<TSchema>(this.collectionName);
     await collection.deleteOne(filter as Filter<Document>, options);
+  }
 
+  private serialize(notSerializedPlant?: WithId<Document> | WithId<TSchema> | null): TSchema | undefined {
+    if (!notSerializedPlant) return undefined;
+
+    return { ...notSerializedPlant, _id: notSerializedPlant._id.toString() } as TSchema;
   }
 }

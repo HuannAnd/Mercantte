@@ -1,7 +1,7 @@
 "use client";
 
 export default function Footer() {
-  
+
 
   return (
     <footer className="absolute bottom-0 h-[200px] w-screen">
@@ -9,7 +9,6 @@ export default function Footer() {
         <path d="M0 0H1920V299.808C1920 678.566 0 171.39 0 299.808V161.897V0Z" fill="#5D7867" />
       </svg>
       <div>
-
       </div>
     </footer>
   )

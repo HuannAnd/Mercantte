@@ -1,5 +1,6 @@
 import { TREFLE_BASE_URL } from "@/constants/baseURLs";
 
+// Deprecated
 
 export async function getSimillarsFamilyPlants(familyName = "12") {
   try {

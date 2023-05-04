@@ -6,15 +6,14 @@ import { FONTS } from '@/constants/fonts'
 
 import { Product } from '@/components';
 import { PlantData } from '@/@types/trefle';
+import { PlantDocument } from '@/@types/plant';
 
 
 type SalesProps = {
-  plants: PlantData[] | undefined,
+  plants: PlantDocument[] | undefined,
 } & HTMLAttributes<HTMLDivElement>
 
 export default function Sales({ plants, ...props }: SalesProps) {
-
-
   return (
     <>
       <div {...props} className='p-10'>
@@ -26,24 +25,15 @@ export default function Sales({ plants, ...props }: SalesProps) {
         {!plants ? (
           <h1>Loading...</h1>
         ) : (
-          plants.map((plant, index) => index < 4 ? (
-            <Product
-              key={plant.id}
-              plant={plant}
-            />
-          ) : null
-          
+          plants.filter((plant, index: number) => index < 4).map((plant) => {
+            // é necessário fazer essa copnversão, pois, Client Compoenents não aceitam a prop _id como ObjectId tendo métodos com toJSON e entre outros...
+            const newPlant = { ...plant, _id: plant._id.toString() };
+
+            return <Product key={plant._id.toString()} plant={newPlant} />
+          }
           )
         )}
       </div>
     </>
   );
-}
-
-function ProductLoading() {
-  return (
-    <div className={`relative border-2 cursor-pointer border-primary duration-300 p-5 bottom-0 ease-out w-[280px] h-auto bg-white overflow-y-hidden`}>
-      <h2>Loading Content</h2>
-    </div>
-  )
 }

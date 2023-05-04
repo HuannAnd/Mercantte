@@ -1,26 +1,24 @@
 "use client";
 
+import { PlantDocument } from "@/@types/plant";
 import { Watering } from "@/@types/plantId";
 
 import { FONTS } from "@/constants/fonts";
 
 type InfoProps = {
-  name: string,
-  description?: string,
-  family?: string,
-  watering?: Watering,
-  copyrightLicense?: string
-
+  plant: PlantDocument
 }
 
 export default function Info({
-  name,
-  description,
-  family,
-  watering,
-  copyrightLicense
+  plant
 }: InfoProps) {
 
+  const {
+    name,
+    description,
+    irrigation_details,
+    family
+  } = plant
 
   return (
     <>
@@ -35,17 +33,8 @@ export default function Info({
           <p className={"ml-8 " + FONTS.BODY}>{family}</p>
         </div>
         <div className="block">
-          <h3 className={`${FONTS.BOLD}`}>Watering</h3>
-          <ul className="ml-8">
-            <li>
-              Maximum{" "}
-              {watering?.max}
-            </li>
-            <li>
-              Minimum{" "}
-              {watering?.min}
-            </li>
-          </ul>
+          <h3 className={`${FONTS.BOLD}`}>Irrigation details</h3>
+          <p className={"ml-8 " + FONTS.BODY}>{irrigation_details}</p>
         </div>
       </div>
       <small className='ml-8 block mb-8'>
