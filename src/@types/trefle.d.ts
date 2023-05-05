@@ -1,5 +1,5 @@
 export interface TrefleBody {
-  data: PlantData
+  data: PlantData[]
   meta: Meta
 }
 
