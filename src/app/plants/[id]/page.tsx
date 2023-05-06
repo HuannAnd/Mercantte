@@ -2,18 +2,15 @@ import Image from "next/image";
 
 import { FONTS } from "@/constants/fonts";
 
-import { PathType } from "@/@types/breadcrumbPaths";
+import paths from '@/constants/paths'
 
-import NavBar from "@/app/navbar";
-import Info from './plant-info';
+import NavBar from "@/app/(widgets)/navbar";
+import Info from './info';
 
 import { Button, Carousel, Breadcrumb } from "@/components";
 
-
-import { PlantIdBody } from "@/@types/plantId";
-import { PlantDocument } from "@/@types/plant";
-
 import PlantsRepository from "@/repositories/plantsRepositories";
+
 import { ObjectId } from "mongodb";
 
 
@@ -23,58 +20,15 @@ export default async function PlantsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  //TODO substituir as APIs por operações do nosso banco com um único GET, para evitar os erros 429 e possíveis crashs
-  /*
-  // get the params from URL
-  const { plant_id } = searchParams
-
-  // Essencials plant data
-  const plantData = await getPlantData(plant_id?.toString());
-  const familyName = plantData.family.name;
-  const plantURLImage = plantData.image_url
-
-
-  // get all family plants to show in Carousel component
-  const commonFamilyPlants = await getSimillarsFamilyPlants(familyName);
-
-  // Navbar content
-  const paths: PathType[] = [
-    { label: "Home", value: "" },
-    { label: "Our Plants", value: "/", htmlElementId: "#products" },
-    { label: plantData.scientific_name, value: "" },
-  ]
-
-  // encode to get the data on post request 
-  const base64Image = await convertImageToBase64(plantURLImage);
-  const { suggestions } = await getPlantDetailsWithPlantId(base64Image) as PlantIdBody;
-  const plantInformation = suggestions.find((x) => x.plant_name.toUpperCase() === plantData.scientific_name.toUpperCase());
-
-  if (!plantInformation) {
-    throw new Error('plant information not exist, or not founded');
-
-  }
-
-  const { description, family, watering, copyrightLicense } = getPlantInfo(plantInformation);
-  */
-
-  // Pegando os dados necessários para nossa página com o id fornecido pelo params.
-  //TODO temos que fazer o type de data automaticamente ser reconhecido como um Document do tipo Plant
   const { plant_id } = searchParams;
 
   const data = await PlantsRepository.getById(new ObjectId(plant_id as string));
   const commonFamilyPlants = await PlantsRepository.getAllByFamilyName(data.family);
 
-  // paths do componente Breadcrumb
-  const paths: PathType[] = [
-    { label: "Home", value: "" },
-    { label: "Our Plants", value: "/", htmlElementId: "#products" },
-    { label: data.name, value: "" },
-  ]
-
   return (
     <div className="bg-primary shadow-main h-screen flex flex-col w-[1280px] mx-auto">
       <NavBar className="border-b-white mb-8 border-b-2" />
-      <Breadcrumb className="mb-8 px-4" paths={paths} />
+      <Breadcrumb className="mb-8 px-4" paths={paths} currentRoute={data.name} />
       <svg className="w-screen absolute -z-10 left-0 top-0" viewBox="0 0 1920 443" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0H1920V299.808C1920 678.566 0 171.39 0 299.808V161.897V0Z" fill="#675A46" />
       </svg>
@@ -96,7 +50,6 @@ export default async function PlantsPage({
         </article>
         <article className='border-l-2 border-l-white w-[660px] px-10'>
           <Info plant={data} />
-
           <Button className='w-full' buttonTypes='callToAction'>Buy Now</Button>
         </article>
       </section>

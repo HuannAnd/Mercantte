@@ -2,11 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import PlantsRepository from "@/repositories/plantsRepositories";
 
-import getPlantIrrigationsDetails from "@/utils/getPlantIrrigationsDetails";
-import getPlantDescription from "@/utils/getPlantDescription";
-import getPlantCareDetails from "@/utils/getPlantCareDetails";
 
-import { PlantDocument } from "@/@types/plant";
+ import { PlantDocument } from "@/@types/plant";
 import { WithId } from "mongodb";
 
 // TODO: Iniciar a ideia do POST para o banco de dados
@@ -17,6 +14,7 @@ export async function GET(request: Request) {
 
     //Se quando usado o parâmetro family_name se ele existe então a API entende que está fazendo a requisição das familias
     //para um request na rota: /api/plants/family?family_name=...
+    console.log("passou aqui")
     if (pathname.includes("/family")) {
       if (searchParams.has("family_name")) {
         const familyName = searchParams.get("family_name");

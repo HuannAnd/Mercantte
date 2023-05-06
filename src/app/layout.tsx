@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 
 import { Inter } from "next/font/google";
 
-import Footer from './footer';
 
 const inter = Inter({
   weight: ["400", "500", "700"],

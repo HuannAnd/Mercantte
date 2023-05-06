@@ -1,40 +1,22 @@
-import Sales from "./sales"
-import Summary from "./summary"
-import Hero from "./hero"
-import Background from "./background"
-import NavBar from "./navbar"
-import Contact from "./contact"
+import {
+  Background,
+  Contact,
+  Hero,
+  NavBar,
+  Sales,
+  Summary,
+} from './(widgets)'
 
 import Image from "next/image"
 
-import { PlantData } from "@/@types/trefle"
-
 import PlantsRepository from '@/repositories/plantsRepositories'
 
-
-async function getPlantsData() {
-  try {
-    const body = await fetch(`https://trefle.io/api/v1/plants?token=${process.env.NEXT_PUBLIC_API_TREFLE_KEY}`);
-    const { data } = await body.json();
-
-    return data as PlantData[]
-  } catch (error) {
-
-  }
-
-
-}
-
 export default async function Page() {
-  // Deprecated
-  /*
-  const plants = await getPlantsData();
-  */
+  const plants = await PlantsRepository.getAll();
+  plants.forEach(x => {
+    console.log(x);
 
-  // Lembrando que não temos os dados das plantas ainda(como deveria);
-  const plants = await PlantsRepository.getAll(); 
-
-  
+  })
 
   return (
     <>
