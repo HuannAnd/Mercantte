@@ -13,10 +13,10 @@ import PlantsRepository from '@/repositories/plantsRepositories'
 
 export default async function Page() {
   const plants = await PlantsRepository.getAll();
-  plants.forEach(x => {
-    console.log(x);
-
-  })
+  // const plants = undefined;
+  plants.forEach(x =>
+    console.log(x)
+  )
 
   return (
     <>
@@ -54,7 +54,7 @@ export default async function Page() {
         <svg className="w-screen absolute -z-10 top-[1000px] left-0 " viewBox="0 0 1920 443" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0H1920V299.808C1920 678.566 0 171.39 0 299.808V161.897V0Z" fill="#5D7867" />
         </svg>
-        <main className='w-full h-auto bg-primary' >
+        <main className='w-full h-auto' >
           <Summary />
           <Sales id="products" plants={plants} />
           <Contact id="contact" />

@@ -17,24 +17,23 @@ export async function GET(request: NextApiRequest) {
     return NextResponse.json({ message: "The specified param not contain your type correctly" });
   }
 
-  //Comentaod p
+  try {
+    // Error 429 Too many Requests, possíveis causas são a quantidade de tokens ou RPM 
+    const description = await OpenAiHttpService.getPlantDescription(obj?.param);
+    // const careDetails = await OpenAiHttpService.getCareDetails(obj?.param);
+    // const irrigationDetails = await OpenAiHttpService.getIrrigationDetails(obj?.param);
 
-  // try {
-  //   const description = await OpenAiHttpService.getPlantDescription(obj?.param);
-  //   const careDetails = await OpenAiHttpService.getCareDetails(obj?.param);
-  //   const irrigationDetails = await OpenAiHttpService.getIrrigationDetails(obj?.param);
+    const data = {
+      description,
+      // careDetails,
+      // irrigationDetails
+    }
 
-  //   const data = {
-  //     description,
-  //     careDetails,
-  //     irrigationDetails
-  //   }
-
-  //   return NextResponse.json({ message: "It the data", data, success: true })
-  // } catch (error) {
-  //   console.error(error);
-  //   return NextResponse.json({ message: "Error to get gpt responses", success: false })
-  // }
+    return NextResponse.json({ message: "It the data", data, success: true })
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "Error to get gpt responses", success: false })
+  }
 
 }
 

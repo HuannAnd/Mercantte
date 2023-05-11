@@ -17,8 +17,8 @@ export default function Sales({ plants, ...props }: SalesProps) {
   return (
     <>
       <div {...props} className='p-10'>
-        <h1 className={`${FONTS.H1} font-inter text-center text-white mx-auto`}>Plants</h1>
-        <p className={`${FONTS.BODY} text-center mx-auto text-white opacity-60`}>View some plants, around the world</p>
+        <h1 className={`${FONTS.H1} text-dark font-inter text-center mx-auto`}>Plants</h1>
+        <p className={`${FONTS.BODY} text-center mx-auto text-dark-white opacity-60`}>View some plants, around the world</p>
       </div>
 
       <div className="w-full h-auto flex px-4 flex-wrap gap-x-4 gap-y-4 justify-center mb-4" >

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { FONTS } from "@/constants/fonts"
 
@@ -14,7 +14,8 @@ type BenefitProps = {
   imageIndex?: string,
   title: string,
   children: ReactNode,
-  date: string
+  date: string,
+  theme?: 'dark' | 'light'
 
 }
 
@@ -23,22 +24,22 @@ function Benefit({
   imageIndex = "1",
   title,
   children,
-  date
+  date,
+  theme = 'light'
 
 }: BenefitProps) {
 
   return (
     <div className="flex flex-row gap-[135px]">
-
       <div className={`${isRight ? 'order-2' : 'order-1'} w-[600px] relative`}>
-        <h2 className={`${isRight ? 'text-right' : ''} ${FONTS.H1} leading-tight text-white mb-4`}>{title}</h2>
-        <p className={`${isRight ? 'text-right' : ''} ${FONTS.BODY} mb-8 text-white`}>{children}</p>
-        <small className={`${isRight ? 'text-right absolute right-0 ' : ''} text-primary opacity-70`}>{date}</small>
+        <h2 className={`${isRight ? 'text-right' : ''} ${theme === 'dark' ? 'text-dark' : 'text-white'} ${FONTS.H1} leading-tight mb-4`}>{title}</h2>
+        <p className={`${isRight ? 'text-right' : ''} ${theme === 'dark' ? 'text-dark-white' : 'text-white/70'} text-dark-white ${FONTS.BODY} mb-8`}>{children}</p>
+        <small className={`${isRight ? 'text-right absolute right-0 ' : ''}  ${theme === 'dark' ? 'text-dark-white' : 'text-white/70'} opacity-70`}>{date}</small>
         <Button
-          className={`${FONTS.BOLD} ${!isRight ? 'left-0' : ''} w-full mt-8 `}
+          className={`${FONTS.BOLD} ${!isRight ? 'left-0' : ''} w-full mt-8 bg-secondary `}
+          buttonTypes="buy"
         >Learn More</Button>
       </div>
-
       <div
         className={`
         ${isRight ? 'order-1' : 'order-2'} 

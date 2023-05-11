@@ -4,7 +4,8 @@ import Benefit from "./Benefit"
 import Button from "./Button"
 import Breadcrumb from "./Breadcrumb"
 import Carousel from "./Carousel"
-import Product from "./Product"
+import Product from "./Card"
+import Checkbox from "./CheckBox"
 
 
 export {
@@ -13,5 +14,6 @@ export {
   Button,
   Product,
   Breadcrumb,
-  Carousel
+  Carousel,
+  Checkbox
 }

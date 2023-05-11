@@ -1,4 +1,4 @@
-import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId } from "mongodb";
+import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId, OptionalId } from "mongodb";
 
 import { BaseDocument } from '@/@types/common'
 
@@ -18,21 +18,25 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     this.collectionName = collectionName;
   }
 
-  protected async getById(id: ObjectId): Promise<TSchema | undefined> {
+  protected async getById(id: string): Promise<TSchema | undefined> {
+    const _id = new ObjectId(id);
+
     const collection = this.repository.collection<TSchema>(this.collectionName);
-    const result = await collection.findOne({}, { projection: { id: id } });
+    const result = await collection.findOne({ _id } as Filter<TSchema>);
 
     return this.serialize(result);
   }
 
   protected async getAll(filter?: Filter<TSchema>, options?: FindOptions<TSchema>): Promise<TSchema[]> {
     const collection = this.repository.collection<TSchema>(this.collectionName);
+    console.log(collection);
+
     const data = await collection.find(filter as Filter<Document>, options).toArray();
 
     return data.map(x => this.serialize(x)!);
   }
 
-  protected async add(data: TSchema): Promise<void> {
+  protected async add(data: TSchema | OptionalId<TSchema>): Promise<void> {
     const collection = this.repository.collection<TSchema>(this.collectionName);
     await collection.insertOne(data as any);
   }

@@ -14,7 +14,7 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
     super.add(newPlant);
   }
 
-  public async getById(id: ObjectId): Promise<PlantDocument> {
+  public async getById(id: string): Promise<PlantDocument> {
     const plant = await super.getById(id);
 
     if (!plant) {
@@ -29,7 +29,7 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
   }
 
   public async getAllByFamilyName(family: string) {
-    const plants = await super.getAll({ family }, { projection: { family } });
+    const plants = await super.getAll({ family });
 
     if (plants.length === 1) {
       console.info("Does not exist another plant in the same family");

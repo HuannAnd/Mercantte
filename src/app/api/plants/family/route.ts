@@ -1,7 +1,9 @@
-import PlantsRepositories from "@/repositories/plantsRepositories"
 import { NextApiRequest } from "next"
+
 import { NextResponse } from "next/server";
-import next from "next/types";
+
+import PlantsRepositories from "@/repositories/plantsRepositories"
+
 
 export async function GET(request: NextApiRequest) {
   const { searchParams } = new URL(request.url!);

@@ -31,7 +31,6 @@ export default function Carousel({ plants, className }: CarouselProps) {
 
   return (
     <Slider className={`${className} flex flex-row w-full`} {...settings}>
-
       {plants.filter((plant, index: number) => index < 5).map((plant: PlantDocument) => {
         // é necessário fazer essa copnversão, pois, Client Compoenents não aceitam a prop _id como ObjectId tendo métodos com toJSON e entre outros...
         const newPlant = { ...plant, _id: plant._id.toString() };

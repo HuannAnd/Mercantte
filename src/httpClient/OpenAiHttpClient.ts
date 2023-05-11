@@ -4,7 +4,7 @@ import { OpenAiCompletionResponse } from "@/@types/openai";
 
 class OpenAiHttpClient extends BaseHttpClient {
   constructor() {
-    super("htpps://api.openai.com");
+    super("https://api.openai.com");
   }
 
   public getText(response: any): string {

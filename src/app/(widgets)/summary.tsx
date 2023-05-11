@@ -23,6 +23,7 @@ export default function Summary() {
         date="December, 23 of 2022"
         isRight
         key={2}
+        theme="dark"
         imageIndex="2"
 
       >
@@ -31,7 +32,6 @@ export default function Summary() {
         <br />
         Nam euismod, neque sed viverra rhoncus, magna elit feugiat diam, id sollicitudin odio nisi eget elit. Donec laoreet, justo nec faucibus viverra, felis arcu feugiat orci, ac egestas purus metus sed eros.
       </Benefit>
-      <div className="relative w-full h-[1px] bg-white"></div>
     </div>
   )
 }
