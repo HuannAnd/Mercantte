@@ -2,6 +2,12 @@
 @tailwind utilities;
 @tailwind base;
 
+@layer utilities {
+  .clip-around {
+    clip-path: inset(0 -100vmax);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

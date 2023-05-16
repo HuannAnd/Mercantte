@@ -4,8 +4,8 @@ import { HTMLAttributes } from 'react';
 
 import { FONTS } from '@/constants/fonts'
 
-import { Product } from '@/components';
-import { PlantData } from '@/@types/trefle';
+import { Card } from '@/components';
+
 import { PlantDocument } from '@/@types/plant';
 
 
@@ -29,7 +29,7 @@ export default function Sales({ plants, ...props }: SalesProps) {
             // é necessário fazer essa copnversão, pois, Client Compoenents não aceitam a prop _id como ObjectId tendo métodos com toJSON e entre outros...
             const newPlant = { ...plant, _id: plant._id.toString() };
 
-            return <Product key={plant._id.toString()} plant={newPlant} />
+            return <Card key={plant._id.toString()} plant={newPlant} />
           }
           )
         )}

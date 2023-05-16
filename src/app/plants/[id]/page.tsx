@@ -5,12 +5,11 @@ import { FONTS } from "@/constants/fonts";
 import paths from '@/constants/paths'
 
 import NavBar from "@/app/(widgets)/navbar";
-import Info from './info';
 
-import { Button, Carousel, Breadcrumb } from "@/components";
+import { Button, Carousel, Breadcrumb, Explain } from "@/components";
 
 import PlantsRepository from "@/repositories/plantsRepositories";
-import { Background } from "@/app/(widgets)";
+import PlantImage from "./(widgets)/PlantImage";
 
 
 export default async function PlantsPage({
@@ -23,10 +22,6 @@ export default async function PlantsPage({
   const data = await PlantsRepository.getById(plant_id as string);
   const commonFamilyPlants = await PlantsRepository.getAllByFamilyName(data.family);
 
-  console.log(data);
-  
-
-
   return (
     <div className="h-screen flex flex-col w-[1280px] mx-auto">
       <NavBar className="border-b-white mb-8 border-b-2" />
@@ -38,7 +33,8 @@ export default async function PlantsPage({
         </svg>
       </div>
       <section className='flex flex-row gap-10 text-white mb-10'>
-        <article className='w-[665px] h-[715px] bg-secondary flex overflow-y-hidden justify-center items-center p-16'>
+        <PlantImage image={data.image_url} />
+        {/* <article className='w-[665px] h-[715px] bg-secondary flex overflow-y-hidden justify-center items-center p-16'>
           {data?.image_url && (
             <Image
               className="w-full bg-blend-multiply mix-blend-multiply"
@@ -52,19 +48,22 @@ export default async function PlantsPage({
               priority
             />
           )}
-        </article>
+        </article> */}
         <article className='border-l-2 border-l-white w-[660px] px-10'>
-          <Info plant={data} />
+          <h2 className={`${FONTS.H1}`}>{data.name}</h2>
+          <h3 className="text-[48px] uppercase tracking-widest mb-8 text-white/70">{data.family}</h3>
+          <div className='mb-8'>
+            <Explain theme="light" isOpen className="block mb-4" label="Description" value={data.description} />
+            <Explain theme="dark" className="block mb-4 text-dark" label="Irrigation details" value={data.irrigation_details} />
+          </div>
+          <small className='ml-8 block mb-8 text-dark-white'>{data.care_details}</small>
           <Button className='w-full' buttonTypes='callToAction'>Buy Now</Button>
         </article>
       </section>
-      <section className="h-auto bg-[#ddd] mt-20 n z-10 mb-[100vw]">
-        <div className="absolute h-[787.34px] w-screen left-0 bg-inherit"></div>
-        <div className="w-full h-[787.34px] overflow-hidden z-10 relative bg-clip-border clip">
-          <h2 className={`${FONTS.H2} text-[#333] text-center p-10`}>Common Family</h2>
-          <div className="flex flex-row justify-center items-start w-full px-40 py-10 gap-10">
-            <Carousel plants={commonFamilyPlants} />
-          </div>
+      <section className="h-auto bg-[#444] shadow-[0_0_0_100vmax_#444] clip-around mt-20 n z-10 mb-[100vw]">
+        <h2 className={`${FONTS.H1} text-[#fff] text-center p-10`}>Common Family</h2>
+        <div className="flex flex-row justify-center items-start w-full px-40 py-10 gap-10">
+          <Carousel plants={commonFamilyPlants} />
         </div>
       </section>
     </div>

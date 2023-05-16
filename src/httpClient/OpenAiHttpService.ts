@@ -5,20 +5,22 @@ const resource = "/v1";
 export class OpenAIHttpService extends OpenAiHttpCLientConstructor {
   private options = this.createAuthHeader(process.env.NEXT_PUBLIC_API_OPENAI_KEY);
 
-  async getPlantDescription(plantName: string): Promise<string> {
+  public async getPlantDescription(plantName: string): Promise<string> {
     const prompt = `Create a description of ${plantName} that is at least 10 lines long.`;
     const data = {
       model: 'text-davinci-002',
       prompt,
       max_tokens: 1024,
-      
+      temperature: 0
     }
-    
-    const description = await OpenAiHttpClient.post(`${resource}/completions`, data, this.options).then(this.getText);
+
+    const description = await OpenAiHttpClient.post(`${resource}/completions`, data, { headers: { 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_OPENAI_KEY}`, 'Content-Type': 'application/json' } }).then(this.getText);
+    console.log(description);
+
     return description;
   }
 
-  async getCareDetails(plantName: string): Promise<string> {
+  public async getCareDetails(plantName: string): Promise<string> {
     const prompt = `What are some things to keep in mind when caring for ${plantName}?`;
     const data = {
       model: 'text-davinci-002',
@@ -30,7 +32,7 @@ export class OpenAIHttpService extends OpenAiHttpCLientConstructor {
     return careDetails;
   }
 
-  async getIrrigationDetails(plantName: string): Promise<string> {
+  public async getIrrigationDetails(plantName: string): Promise<string> {
     const prompt = `Write some details about the irrigation requirements for ${plantName}.`;
     const data = {
       model: 'text-davinci-002',
@@ -41,6 +43,6 @@ export class OpenAIHttpService extends OpenAiHttpCLientConstructor {
     const irrigationDetails = await OpenAiHttpClient.post(`${resource}/completions`, data, this.options).then(this.getText);
     return irrigationDetails;
   }
-} 
+}
 
 export default new OpenAIHttpService();

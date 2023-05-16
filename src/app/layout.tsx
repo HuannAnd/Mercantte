@@ -23,6 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Mercantte</title>
+      </head>
       <body className={`${inter.variable} ${roboto.variable} font-inter bg-radial relative`}>
         <div className="overflow-x-hidden w-screen relative flex justify-center">
           {children}

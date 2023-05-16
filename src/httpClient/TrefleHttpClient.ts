@@ -2,7 +2,7 @@ import { BaseHttpClient } from "./BaseHttpClient";
 
 class TrefleHttpClient extends BaseHttpClient {
     constructor() {
-        super('htpps://trefle.io/api');
+        super('https://trefle.io/api');
     }
 
 }

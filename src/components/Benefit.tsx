@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 import { FONTS } from "@/constants/fonts"
 
 import { Button } from "@/components";
+import { useIsOverlapping } from "@/hooks";
 
 
 type BenefitProps = {
@@ -28,6 +29,7 @@ function Benefit({
   theme = 'light'
 
 }: BenefitProps) {
+
 
   return (
     <div className="flex flex-row gap-[135px]">

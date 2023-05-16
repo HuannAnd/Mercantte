@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { Product } from '@/components';
+import { Card } from '@/components';
 
 import { PlantDocument } from '@/@types/plant';
 
@@ -26,16 +26,13 @@ export default function Carousel({ plants, className }: CarouselProps) {
   }
 
   if (!plants) {
-    throw new Error("The carrousel plantas actually is null");
+    throw new Error("The carrousel plants actually is null");
   }
 
   return (
     <Slider className={`${className} flex flex-row w-full`} {...settings}>
       {plants.filter((plant, index: number) => index < 5).map((plant: PlantDocument) => {
-        // é necessário fazer essa copnversão, pois, Client Compoenents não aceitam a prop _id como ObjectId tendo métodos com toJSON e entre outros...
-        const newPlant = { ...plant, _id: plant._id.toString() };
-
-        return < Product className='mx-auto' plant={newPlant} key={newPlant._id} />
+        return < Card className='mx-auto' plant={plant} key={plant._id} />
 
       }
 

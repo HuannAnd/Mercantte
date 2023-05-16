@@ -28,6 +28,14 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
     return super.getAll();
   }
 
+  public async thatPlantAlreadyExists(plantName: string) {
+    const plants = await super.getAll({ name: plantName });
+
+    if (plants.length >= 1) return true;
+
+    return false;
+  }
+
   public async getAllByFamilyName(family: string) {
     const plants = await super.getAll({ family });
 

@@ -19,7 +19,7 @@ export interface PlantData {
   vegetable: boolean
   image_url: string
   genus: string
-  family: Family
+  family: string
   duration: any
   edible_part: string[]
   edible: boolean

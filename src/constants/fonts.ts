@@ -7,4 +7,4 @@ const FONTS = {
 
 }
 
-export {FONTS}
+export { FONTS }

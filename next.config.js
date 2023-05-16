@@ -4,6 +4,8 @@ const { config } = require('process');
 const nextConfig = {
   experimental: {
     appDir: true,
+    serverActions: true,
+    
   },
 
   images: {

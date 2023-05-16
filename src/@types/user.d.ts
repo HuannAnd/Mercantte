@@ -14,6 +14,16 @@ export type UserDocument = BaseDocument & {
   phone?: string
 }
 
+// arbitrariamente usaremos esse type, porém podemos pegar esse type e usar para o próprio UserDocument. Como não temos a feature de cadastro, usaremos esse aqui,
+// para mostrar "avaliadores"(bots).
+export type UserAvaliator = {
+  name: string
+  email: string,
+  image?: string,
+  comment: string,
+  rate: number
+}
+
 export type User = {
   name: string
   email?: string,

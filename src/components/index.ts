@@ -4,16 +4,20 @@ import Benefit from "./Benefit"
 import Button from "./Button"
 import Breadcrumb from "./Breadcrumb"
 import Carousel from "./Carousel"
-import Product from "./Card"
-import Checkbox from "./CheckBox"
+import Card from "./Card"
+import CondionTerm from "./CondionTerm"
+import Explain from "./Explain"
+import { Profile } from "./Profile"
 
 
 export {
   Rating,
   Benefit,
   Button,
-  Product,
+  Explain,
+  Card,
   Breadcrumb,
   Carousel,
-  Checkbox
+  CondionTerm,
+  Profile
 }

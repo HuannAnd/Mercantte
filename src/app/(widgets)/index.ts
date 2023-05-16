@@ -7,6 +7,7 @@ import Sales from "./sales";
 import Summary from "./summary";
 import Contact from "./contact";
 import Footer from "./footer";
+import Avaliations from "./avaliations";
 
 export {
   Background,
@@ -15,5 +16,6 @@ export {
   Sales,
   Summary,
   Contact,
-  Footer
+  Footer,
+  Avaliations
 }

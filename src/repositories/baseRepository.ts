@@ -29,7 +29,6 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
 
   protected async getAll(filter?: Filter<TSchema>, options?: FindOptions<TSchema>): Promise<TSchema[]> {
     const collection = this.repository.collection<TSchema>(this.collectionName);
-    console.log(collection);
 
     const data = await collection.find(filter as Filter<Document>, options).toArray();
 

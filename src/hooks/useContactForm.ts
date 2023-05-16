@@ -1,9 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEventHandler, useState } from "react";
 
 import UserRepository from "@/repositories/usersRepository";
 import { User } from "@/@types/user";
 
 import { formatEmail, formatPhone } from '@/utils'
+import { addUser } from "@/app/(actioners)/user";
+import { Unbounded } from "next/font/google";
+import axios from "axios";
 
 
 interface ValidationFunctions {
@@ -40,9 +43,15 @@ export function useContactForm() {
   const [name, setName] = useState<string | undefined>();
   const [phone, setPhone] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
+  const [term, setTerm] = useState<boolean>(false);
 
 
   // Está recebendo o input e jogando na função formatEmail
+  const handleOnClick = () => {
+    setTerm(!term);
+
+  }
+
   const handleInputEmail = (e: ChangeEvent<HTMLInputElement>) => {
     const email = e.currentTarget.value;
 
@@ -65,10 +74,14 @@ export function useContactForm() {
   // O erro de dns acontece pois isso é uma operação no server, logo pela versão 13 do next 
   // deve conter "use server" no body da função
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-    event.stopPropagation();
+    console.log("action");
+    event.preventDefault();
 
-    if (!(validationFunctions.validate()) || !name) {
+
+    if (!validationFunctions.validate() || !name) {
       setIsWrong(true);
+      console.log("Invalid");
+
       return
     }
 
@@ -78,25 +91,29 @@ export function useContactForm() {
       phone
     }
 
-    await addUser(user);
+    setEmail(undefined);
+    setPhone(undefined);
+    setName(undefined);
+
+    fetch("http://localhost:3000/api/users", {
+      body: JSON.stringify(user),
+    })
+
     setIsWrong(false);
   }
 
   // Irá adicionar o user deve ocorrer no server essa ação pois chama o MongoClient.
-  async function addUser(user: User) {
-    "use server";
-
-    await UserRepository.add(user);
-  }
 
   return {
     isWrong,
     name,
     email,
     phone,
+    term,
     handleInputEmail,
     handleInputPhone,
     handleOnSubmit,
-    handleInputName
+    handleInputName,
+    handleOnClick
   }
 }
