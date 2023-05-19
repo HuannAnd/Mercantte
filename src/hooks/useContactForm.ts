@@ -1,119 +1,133 @@
-import { ChangeEvent, FormEvent, MouseEventHandler, useState } from "react";
+"use client";
 
-import UserRepository from "@/repositories/usersRepository";
+import { ChangeEvent, FormEvent, MutableRefObject, ReactNode, useRef, useState } from "react";
+
 import { User } from "@/@types/user";
 
 import { formatEmail, formatPhone } from '@/utils'
-import { addUser } from "@/app/(actioners)/user";
-import { Unbounded } from "next/font/google";
-import axios from "axios";
+import sendingUserToDatabase from "@/utils/sendingUserToDatabase";
+import validateForm from "@/utils/validateForm";
 
-
-interface ValidationFunctions {
-  validateEmail: (email: string) => boolean;
-  validatePhone: (phone: string) => boolean;
-  validate: (email?: string, phone?: string) => boolean;
-}
-
-const validationFunctions: ValidationFunctions = {
-  validateEmail: (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  },
-
-  validatePhone: (phone: string): boolean => {
-    const phoneRegex = /^(\d{2})(\d{1})(\d{4})(\d{4})$/;
-    return phoneRegex.test(phone);
-  },
-
-  validate: (email?: string, phone?: string): boolean => {
-    if (!email || !phone) {
-      return false;
-    }
-    return validationFunctions.validateEmail(email) && validationFunctions.validatePhone(phone);
-  }
-};
+import { ERRORS_CONTACT } from "@/constants/errors";
 
 
 export function useContactForm() {
-  // Valor usado para o Ui componente de Contact.tsx
-  const [isWrong, setIsWrong] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Variavéis do form 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [warns, setWarns] = useState<ERRORS_CONTACT[]>([]);
+
   const [name, setName] = useState<string | undefined>();
   const [phone, setPhone] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
   const [term, setTerm] = useState<boolean>(false);
 
-
-  // Está recebendo o input e jogando na função formatEmail
-  const handleOnClick = () => {
+  const handleTermCLick = () => {
     setTerm(!term);
-
   }
 
   const handleInputEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    const email = e.currentTarget.value;
+    const { value } = e.currentTarget;
+    console.log(value);
 
-    setEmail(email);
-    e.currentTarget.value = formatEmail(email);
+    setEmail(value);
   }
 
   const handleInputPhone = (e: ChangeEvent<HTMLInputElement>) => {
-    const phone = e.currentTarget.value
+    let value = e.currentTarget.value
+    value = value.replace(/[a-zA-Z]/g, "");
+    console.log(value);
 
-    e.currentTarget.value = formatPhone(phone);
+
+    if (e.currentTarget.maxLength >= 11) {
+      setPhone(value);
+      e.currentTarget.value = formatPhone(value);
+      return
+    }
+
+    setPhone(value);
+    console.log(phone);
   }
 
   const handleInputName = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget
+    let value = e.currentTarget.value;
+
+    if (value.length > 20) {
+
+    }
+
+    value = value.replace(/\d/g, "");
+    e.currentTarget.value = value;
 
     setName(value);
   }
 
-  // O erro de dns acontece pois isso é uma operação no server, logo pela versão 13 do next 
-  // deve conter "use server" no body da função
-  const handleOnSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-    console.log("action");
-    event.preventDefault();
-
-
-    if (!validationFunctions.validate() || !name) {
-      setIsWrong(true);
-      console.log("Invalid");
-
-      return
+  const handleFormErrors = (error: ERRORS_CONTACT): ERRORS_CONTACT | null => {
+    if (warns.includes(error)) {
+      return error
     }
-
-    const user: User = {
-      name,
-      email,
-      phone
-    }
-
-    setEmail(undefined);
-    setPhone(undefined);
-    setName(undefined);
-
-    fetch("http://localhost:3000/api/users", {
-      body: JSON.stringify(user),
-    })
-
-    setIsWrong(false);
+    return null
   }
 
-  // Irá adicionar o user deve ocorrer no server essa ação pois chama o MongoClient.
+  const clearInputs = () => {
+    if (formRef) {
+      formRef.current?.reset();
+      setTerm(false);
+    }
+  }
+
+  const handleOnSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    try {
+      event.preventDefault();
+
+      if (isSubmitting) {
+        return
+      }
+
+      setIsSubmitting(true)
+
+      const { isValid, warnings } = validateForm(term, name, email, phone);
+
+      if (warnings.length !== 0 && !isValid) {
+        setWarns(warnings);
+        setIsSubmitting(false);
+
+        return;
+      }
+
+      const user: User = {
+        name: name!,
+        email,
+        phone
+      }
+
+      await sendingUserToDatabase(user);
+
+      clearInputs();
+      setIsSubmitting(false);
+      setWarns([]);
+    } catch (error) {
+      const err = (error as Error).message;
+      console.error("Error: ", err);
+
+      if (ERRORS_CONTACT.PHONE_OR_EMAIL_SIGNED.includes(err)) {
+        setWarns([ERRORS_CONTACT.PHONE_OR_EMAIL_SIGNED])
+      }
+      
+      setIsSubmitting(false);
+    }
+  }
 
   return {
-    isWrong,
-    name,
-    email,
-    phone,
-    term,
+    isSubmitting,
+    formRef,
+    buttonRef,
+    handleFormErrors,
     handleInputEmail,
     handleInputPhone,
     handleOnSubmit,
     handleInputName,
-    handleOnClick
+    handleTermCLick
   }
 }

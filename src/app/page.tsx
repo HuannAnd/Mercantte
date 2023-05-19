@@ -1,24 +1,21 @@
 import {
   Background,
-  Contact,
   Hero,
   NavBar,
   Sales,
-  Summary,
-  Avaliations
 } from './(widgets)';
 
 import Image from "next/image"
 
 import PlantsRepository from '@/repositories/plantsRepositories'
 import UsersRepository from '@/repositories/usersRepository';
+
 import Main from './(widgets)/main';
 
 
 export default async function Page() {
   const plants = await PlantsRepository.getAll();
   const users = await UsersRepository.getAll();
-
 
   return (
     <>

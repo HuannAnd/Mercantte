@@ -19,23 +19,8 @@ export function Profile({
 }: ProfileProps) {
   const { comment, name, email, rate, image } = user;
 
-  function formatDate(date: string) {
-    const newDate = new Date(date);
-
-    const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-
-    const month = months[newDate.getMonth()];
-    const day = newDate.getDate();
-    const year = newDate.getFullYear();
-
-    return `${month}, ${day} of ${year}`;
-  }
-
   return (
-    <article className="h-[240px] w-[320px] flex flex-col gap-2 shadow-lg p-5">
+    <article className="h-[240px] w-[320px] flex flex-col gap-2 shadow-lg p-5 duration-300 cursor-pointer hover:-translate-y-3">
       <div className="grid grid-cols-[48px_1fr] gap-2 items-center">
         <div className="bg-primary w-full rounded-full overflow-hidden">
           {!!image ? (

@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode } from "react";
 
 import { FONTS } from "@/constants/fonts"
 
 import { Button } from "@/components";
-import { useIsOverlapping } from "@/hooks";
 
 
 type BenefitProps = {
@@ -27,10 +26,7 @@ function Benefit({
   children,
   date,
   theme = 'light'
-
 }: BenefitProps) {
-
-
   return (
     <div className="flex flex-row gap-[135px]">
       <div className={`${isRight ? 'order-2' : 'order-1'} w-[600px] relative`}>

@@ -8,6 +8,7 @@ import Card from "./Card"
 import CondionTerm from "./CondionTerm"
 import Explain from "./Explain"
 import { Profile } from "./Profile"
+import FormError from "./FormError"
 
 
 export {
@@ -19,5 +20,6 @@ export {
   Breadcrumb,
   Carousel,
   CondionTerm,
-  Profile
+  Profile,
+  FormError
 }

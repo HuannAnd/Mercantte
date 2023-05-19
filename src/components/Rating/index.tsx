@@ -26,6 +26,7 @@ function Rating({
     <ul className={`${className} flex flex-row gap-2`}>
       {parsingToArray.map((element, index) =>
         <Image
+          key={index}
           src={index < currentRate ? iconRateOnAction : iconRateDefault}
           alt="icon rate"
           width={10}

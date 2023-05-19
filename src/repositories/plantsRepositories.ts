@@ -4,21 +4,29 @@ import { BaseRepository } from './baseRepository'
 
 import { PlantDocument } from '@/@types/plant';
 
+import { ERRORS_PLANTS_REPOSITORY } from '@/constants/errors'
+
 
 class PlantsRepository extends BaseRepository<PlantDocument> {
   constructor() {
     super('Plants');
   }
 
-  public async add(newPlant: any): Promise<void> {
-    super.add(newPlant);
+  public async add<T extends PlantDocument>(newPlant: T): Promise<void> {
+    const isExist = await this.verifingIfPlantExist(newPlant.name);
+
+    if (isExist) {
+      throw new Error(ERRORS_PLANTS_REPOSITORY.PLANT_EXIST);
+    }
+
+    await super.add(newPlant);
   }
 
   public async getById(id: string): Promise<PlantDocument> {
     const plant = await super.getById(id);
 
     if (!plant) {
-      throw new Error("Error to get that plant, please check the provided id");
+      throw new Error(ERRORS_PLANTS_REPOSITORY.GET_PLANT_BY_ID);
     }
 
     return plant;
@@ -28,7 +36,7 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
     return super.getAll();
   }
 
-  public async thatPlantAlreadyExists(plantName: string) {
+  public async verifingIfPlantExist(plantName: string) {
     const plants = await super.getAll({ name: plantName });
 
     if (plants.length >= 1) return true;
@@ -40,7 +48,8 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
     const plants = await super.getAll({ family });
 
     if (plants.length === 1) {
-      console.info("Does not exist another plant in the same family");
+      console.info(ERRORS_PLANTS_REPOSITORY.EMPTY_PLANT_FAMILY);
+      return [];
     }
 
     return plants;

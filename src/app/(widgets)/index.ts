@@ -3,19 +3,15 @@
 import Background from "./background";
 import NavBar from "./navbar";
 import Hero from "./hero";
-import Sales from "./sales";
-import Summary from "./summary";
-import Contact from "./contact";
+import Contact from "../(sections)/contact";
 import Footer from "./footer";
-import Avaliations from "./avaliations";
+import { Sales } from "../(sections)";
 
 export {
   Background,
   NavBar,
   Hero,
-  Sales,
-  Summary,
   Contact,
   Footer,
-  Avaliations
+  Sales
 }

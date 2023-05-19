@@ -1,102 +1,109 @@
 "use client";
 
-import { HTMLAttributes, useMemo } from 'react';
+import { HTMLAttributes, useRef } from 'react';
 
 import Image from 'next/image';
 
 import { FONTS } from '@/constants/fonts'
 
-import { Button, CondionTerm } from '@/components';
+import { Button, CondionTerm, FormError } from '@/components';
 
 import { useContactForm } from '@/hooks/useContactForm';
-import { spawn } from 'child_process';
-
+import { ERRORS_CONTACT } from '@/constants/errors';
 
 
 type ContactProps = HTMLAttributes<HTMLDivElement>
 
 export default function Contact({ className, ...props }: ContactProps) {
-  // de useContactForm irei tirar as máscaras além dos handles para cara input
   const {
-    isWrong,
+    isSubmitting,
+    formRef,
     handleOnSubmit,
     handleInputName,
     handleInputEmail,
     handleInputPhone,
-    handleOnClick
+    handleTermCLick,
+    handleFormErrors
   } = useContactForm();
 
 
   return (
     <div {...props} className={`${className} grid shadow-[0px_0px_0px_100vmax_#8A9CA0] h-auto p-10 clip-around grid-col-1 w-full my-16 bg-secondary`}>
-      <div className='left-0 absolute bg-inherit h-inherit w-screen -z-10'></div>
       <div className='flex flex-row my-auto'>
         <div className='w-[600px]'>
           <h1 className={`${FONTS.H1} text-white flex-[7] mb-4`}>Stay tuned for our news</h1>
-          <form onSubmit={handleOnSubmit} className="flex-[5] w-[520px]" action="">
-            <label className='mb-2 block text-white' htmlFor="user-name">First Name *</label>
-            <input
-              name='user-name'
-              type="text"
-              aria-label='name input'
-              onChange={handleInputName}
-              className='block mb-4 px-5 py-3 w-full rounded-lg'
-              placeholder='First Name'
-            />
-
+          <form ref={formRef} onSubmit={handleOnSubmit} className="flex-[5] w-[520px]" action="">
+            <div className='mb-4'>
+              <label className='mb-2 block text-white' htmlFor="user-name">First Name *</label>
+              <input
+                name='user-name'
+                type="text"
+                maxLength={20}
+                aria-label='name input'
+                onChange={handleInputName}
+                className='block px-5 py-3 w-full rounded-lg'
+                placeholder='First Name'
+              />
+              <FormError error={handleFormErrors(ERRORS_CONTACT.EMPTY_NAME_INPUT)} />
+            </div>
             <div className='grid grid-cols-4 gap-4 w-full mb-8'>
               <div className='col-span-2'>
                 <label className='mb-2 text-white' htmlFor="user-email">Email Address</label>
-                {isWrong && <span className='text-[12px] inline-block text-red-600'>Verifify your email address </span>}
                 <input
                   name='user-email'
                   aria-label='email input'
+                  maxLength={50}
                   onChange={handleInputEmail}
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                   className='mt-2 px-5 py-3 w-full rounded-lg'
                   placeholder="name@mail.com"
-                  type="text"
+                  type="email"
                 />
+                <FormError error={handleFormErrors(ERRORS_CONTACT.WRONG_EMAIL_FORMAT)} />
               </div>
               <div className='col-span-2'>
                 <label className='mb-2 text-white' htmlFor="">Phone Number</label>
-                {isWrong && <span className='text-[12px] inline-block text-red-600'>Verifify your phone number</span>}
                 <input
                   name='user-phone'
                   aria-label='phone input'
                   className='mt-2 px-5 py-3 w-full rounded-lg'
                   onChange={handleInputPhone}
-                  placeholder="(99) 9 999-9999"
+                  placeholder="(99) 9 9999-9999"
                   maxLength={11}
                   type="tel"
                 />
+                <FormError error={handleFormErrors(ERRORS_CONTACT.WRONG_PHONE_FORMAT)} />
               </div>
             </div>
-            <CondionTerm className='mb-8' onClick={handleOnClick} >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque minima recusandae maxime sint provident adipisci autem temporibus quisquam, voluptates labore nulla excepturi
-            </CondionTerm>
-            <Button className='w-full bg-primary' buttonTypes='callToAction'>Submit</Button>
+            <div className='mb-8'>
+              <FormError error={handleFormErrors(ERRORS_CONTACT.EMPTY_CONTACT_INPUTS)} />
+              <FormError error={handleFormErrors(ERRORS_CONTACT.ACCEPT_TERMS_AND_CONDITIONS)} />
+              <CondionTerm onClick={handleTermCLick} >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque minima recusandae maxime sint provident adipisci autem temporibus quisquam, voluptates labore nulla excepturi
+              </CondionTerm>
+              <FormError error={handleFormErrors(ERRORS_CONTACT.PHONE_OR_EMAIL_SIGNED)} />
+            </div>
+            <Button disabled={isSubmitting} className='w-full bg-primary disabled:brightness-75' buttonTypes='callToAction'>
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
           </form>
         </div>
         <div aria-label='items' className='flex-[1] relative'>
           <div className='bg-primary w-[216px] h-[281px] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2'>
             <Image
-              className='absolute object-contain scale-125 w-[356px] h-[384px] top-[129px] right-[96px]'
+              className='absolute object-contain scale-125 top-[129px] right-[96px]'
               src="/icons/benefit-image4.jpg"
               alt='Plant image'
-
               width={356}
               height={384}
-
               priority
             />
             <Image
-              className='absolute object-contain w-[280px] h-[280px]  bottom-[204px] left-[128px]'
+              className='absolute object-contain bottom-[204px] left-[128px]'
               src="/icons/benefit-image3.jpg"
               alt='Plant image'
-
               width={280}
               height={280}
-
               priority
             />
           </div>

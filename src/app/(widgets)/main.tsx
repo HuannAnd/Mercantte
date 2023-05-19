@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from 'react';
-import { Avaliations, Contact, Sales, Summary } from './'
-import { log } from 'console';
+import { ReactNode } from 'react';
+import { Avaliations, Contact, Summary } from '@/app/(sections)'
+import { useScrollEffect } from '@/hooks';
 
 
 type MainProps = {
@@ -10,32 +10,10 @@ type MainProps = {
 }
 
 export default function Main({ children }: MainProps) {
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const fixedMarginTop = 300;
-  const fixedPosition = 1600;
-  const scrollSpeed = 0.5;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentPosition = window.scrollY;
-
-      if (currentPosition > fixedPosition) {
-        setScrollPosition(fixedPosition * scrollSpeed);
-        return
-      }
-
-      setScrollPosition(currentPosition * scrollSpeed);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const y = useScrollEffect(0.45, 200, 1500);
 
   return (
-    <main className='w-full h-auto' style={{ marginTop: `${scrollPosition + fixedMarginTop}px` }}>
+    <main className='w-full h-auto' style={{ marginTop: `${y}px` }}>
       <Summary />
       {children}
       <Contact id="contact" />

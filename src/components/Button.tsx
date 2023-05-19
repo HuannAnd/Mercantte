@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonHTMLAttributes, ReactNode } from "react"
+import { ButtonHTMLAttributes, MutableRefObject, ReactNode, RefObject } from "react"
 
 import { FONTS } from "@/constants/fonts"
 

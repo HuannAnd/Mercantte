@@ -30,7 +30,7 @@ export default function Carousel({ plants, className }: CarouselProps) {
   }
 
   return (
-    <Slider className={`${className} flex flex-row w-full`} {...settings}>
+    <Slider className={`${className} w-full`} {...settings}>
       {plants.filter((plant, index: number) => index < 5).map((plant: PlantDocument) => {
         return < Card className='mx-auto' plant={plant} key={plant._id} />
 

@@ -1,7 +1,8 @@
-import { ObjectId } from "mongodb";
 import { BaseRepository } from "./baseRepository";
 
-import { UserDocument, User, UserAvaliator } from "@/@types/user";
+import { UserDocument, User } from "@/@types/user";
+
+import { ERRORS_USERS_REPOSITORY } from "@/constants/errors"
 
 //Esse repository vai lidar com os usuários do Hero.
 class UserRepository extends BaseRepository<UserDocument> {
@@ -9,34 +10,28 @@ class UserRepository extends BaseRepository<UserDocument> {
     super('Users');
   }
 
-  public async add(data: User): Promise<void> {
-    // Possível erro de dns pode estar aqui
-    if (!this.hasAlreadySigned(data.email, data.phone)) {
-      return //verificando se o usuário já existe no banco de dados
+  public async add(user: User): Promise<void> {
+    const isSigned = await this.verifingIfUserExist(user.email, user.phone);
+    if (isSigned) {
+      throw new Error(ERRORS_USERS_REPOSITORY.EMAIL_OR_PHONE_SIGNED);
     }
 
     // Ou também aqui 
-    await super.add(data);
+    await super.add(user);
   }
 
-  private async hasAlreadySigned(email?: string, phone?: string) {
-    if (email) {
-      const user = super.getAll({ email: email });
+  private async verifingIfUserExist(email?: string, phone?: string): Promise<boolean> {
+    if (email || phone) {
+      const users = await super.getAll({ $or: [{ email }, { phone }] });
 
-      if (!user) return false
+      if (users.length >= 1) return true
 
-      return true;
+      return false;
     }
-    if (phone) {
-      const user = super.getAll({ phone: phone });
-
-      if (!user) return false
-
-      return true;
-    }
+    throw new Error("Email and phone is does not exist");
   }
 
-// Podemos fazer o seguinte se tivesse uma forma de cadastrar os usuários e ter um campo para avaliações, seria interessante pegar os usuários que são avaliadores e mostrar na home page.
+  // Podemos fazer o seguinte se tivesse uma forma de cadastrar os usuários e ter um campo para avaliações, seria interessante pegar os usuários que são avaliadores e mostrar na home page.
   // public async getAllAvaliators(): Promise<UserDocument[]> {
   //   const users = await super.getAll();
 

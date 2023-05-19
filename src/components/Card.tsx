@@ -41,7 +41,7 @@ function Card({ plant, className }: CardProps) {
         <div>
           <h3 className={"font-inter mb-2 font-bold text-[20px] text-dark truncate max-w-xs" + FONTS.BOLD}>{name}</h3>
           <strong className={"font-roboto block mb-4 uppercase text-[11px] tracking-widest text-dark-white"}>{family}</strong>
-          <p className="text-dark-white truncate line-clamp-6 text-[12px] w-full overflow-y-hidden h-[120px]">{description}</p>
+          <p className="card__preview-text text-dark-white text-[12px] w-full overflow-hidden h-auto">{description}</p>
         </div>
         <Link href={`/plants/${_id}?plant_id=${_id}`}>
           <Button className="w-full bg-secondary border-none" buttonTypes="buy">Learn More</Button>

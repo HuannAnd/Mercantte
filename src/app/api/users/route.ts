@@ -3,8 +3,7 @@ import UserRepository from "@/repositories/usersRepository";
 import { NextResponse } from "next/server";
 
 import { User } from '@/@types/user'
-import { log } from "console";
-import next from "next/types";
+
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -23,15 +22,19 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json({ message: "Failed to fetch data on MongoDB", success: false });
   }
-
-
 }
 
 export async function POST(request: Request) {
-  const data: User = await request.json();
+  try {
+    const data: User = await request.json();
 
-  if (!data) return NextResponse.json({ message: "current data is undefined" });
+    if (!data) return NextResponse.json({ message: "current data is undefined", success: false });
 
-  await UserRepository.add(data);
-  return NextResponse.json({ message: "Hello world", data });
+    await UserRepository.add(data);
+    return NextResponse.json({ message: "Hello world", data, success: true });
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ success: false, message: (error as Error).message });
+  }
 }
