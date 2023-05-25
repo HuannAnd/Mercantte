@@ -18,8 +18,13 @@ export default function Breadcrumb({ className, currentRoute }: BreadcrumbProps)
   const paths: Path[] = [
     { label: "Home", value: "/", to: "/" },
     { label: "Our plants", value: "/", to: "products" },
-    { label: "Contact", value: "/", to: "contact" }
   ]
+
+  paths.push({
+    label: currentRoute,
+    value: "/",
+    to: "plant"
+  })
 
 
   return (
@@ -33,9 +38,12 @@ export default function Breadcrumb({ className, currentRoute }: BreadcrumbProps)
           return (
             <li className="text-white cursor-pointer underline after:no-underline after:ml-1 ml-1 after:text-white last:no-underline last:opacity-60 last:after:content-none" key={path.label}>
               {isLast ? (
-                <SmoothLink className="text-red-200" smooth offset={smoothLink.offset} to={smoothLink.to}>/{path.label}</SmoothLink>
+                <SmoothLink className="text-white/70" smooth offset={smoothLink.offset} to={smoothLink.to}>{path.label}</SmoothLink>
               ) : (
-                <NextLink className="cursor-pointer" href={`${nextLink.value}${nextLink.to}`}>/{path.label}</NextLink>
+                <NextLink className="cursor-pointer" href={`${nextLink.value}#${nextLink.to}`}>
+                  {path.label}{" "}
+                  /
+                </NextLink>
               )}
             </li>
           );

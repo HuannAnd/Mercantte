@@ -14,7 +14,9 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
     const isExist = await this.verifingIfPlantExist(newPlant.name);
 
     if (isExist) {
-      throw new Error(ERRORS_PLANTS_REPOSITORY.PLANT_EXIST);
+      console.error(ERRORS_PLANTS_REPOSITORY.PLANT_EXIST);
+
+      return
     }
 
     await super.add(newPlant);

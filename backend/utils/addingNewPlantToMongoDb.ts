@@ -44,7 +44,10 @@ export default async function addingNewPlantToMongoDB(): Promise<void> {
 
   const exist = await checkIfPlantExists(trefleDetails.name);
   if (exist) {
-    throw new Error("That Plant already exists");
+    console.log("That Plant already exists");
+
+    await addingNewPlantToMongoDB();
+    return
   }
 
   const [description, careDetails, irrigationDetails] = await createGptPlantDetails(trefleDetails.name);

@@ -2,7 +2,7 @@ import cron from "node-cron";
 
 import addingNewPlantToMongoDB from "./utils/addingNewPlantToMongoDb";
 
-const minutesToPlant = 10;
+const minutesToPlant = 5;
 let remainingMinutes = minutesToPlant;
 
 console.log("Program is running");

@@ -36,5 +36,12 @@ export default function Button({
     }
   }
 
-  return <button className={`${handleCostumizableStyles()} ${className} px-4 py-2 ${FONTS.BODY} `} {...props}>{children}</button>
+  return (
+    <button
+      className={`${handleCostumizableStyles()} ${className} px-4 py-2 ${FONTS.BODY} `}
+      style={undefined}
+      {...props}
+    >
+      {children}
+    </button>)
 }

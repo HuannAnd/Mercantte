@@ -1,8 +1,6 @@
 "use client";
 
 import { Benefit } from "@/components";
-import { useEffect, useState } from "react";
-
 
 export default function Summary() {
   return (
