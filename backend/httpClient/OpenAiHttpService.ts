@@ -2,6 +2,9 @@ import OpenAiHttpClient, { OpenAiHttpClient as OpenAiHttpCLientConstructor } fro
 
 const resource = "/v1";
 
+import { config } from 'dotenv'
+config();
+
 export class OpenAIHttpService extends OpenAiHttpCLientConstructor {
   private options = this.createAuthHeader(process.env.NEXT_PUBLIC_API_OPENAI_KEY);
 

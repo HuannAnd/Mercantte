@@ -1,6 +1,6 @@
 import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId, OptionalId } from "mongodb";
 
-import { BaseDocument } from '@/@types/common'
+import { BaseDocument } from '../@types/common'
 
 
 export abstract class BaseRepository<TSchema extends BaseDocument> {

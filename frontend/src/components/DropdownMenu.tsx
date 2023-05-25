@@ -41,7 +41,7 @@ export default function DropdownMenuDemo({ isHommed, paths, ...props }: Dropdown
             const smoothLink = item as SmoothLinkType
 
             return (
-              <DropdownMenu.Item asChild className="cursor-pointer hover:bg-slate-100 group text-[13px] leading-none text-violet11 rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1">
+              <DropdownMenu.Item key={index} asChild className="cursor-pointer hover:bg-slate-100 group text-[13px] leading-none text-violet11 rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1">
                 {isHommed ? (
                   <SmoothLink to='' > {item.label}</SmoothLink>
                 ) : (

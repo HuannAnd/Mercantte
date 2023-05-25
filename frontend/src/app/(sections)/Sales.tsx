@@ -24,8 +24,8 @@ export default function Sales({ plants, ...props }: SalesProps) {
         {!plants ? (
           <h1>Loading...</h1>
         ) : (
-          plants.filter((_, index: number) => index < 7).map((plant) => {
-            return <Card key={plant.id} plant={plant} />
+          plants.filter((_, index: number) => index < 20).map((plant) => {
+            return <Card key={plant._id} plant={plant} />
           }
           )
         )}

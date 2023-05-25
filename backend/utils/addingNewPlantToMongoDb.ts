@@ -1,9 +1,9 @@
-import { PlantDocument } from "@/@types/plant";
+import { PlantDocument } from "../@types/plant";
 
-import OpenAIHttpService from "@/httpClient/OpenAiHttpService";
-import TrefleService from "@/httpClient/TrefleService";
+import OpenAIHttpService from "../httpClient/OpenAiHttpService";
+import TrefleService from "../httpClient/TrefleService";
 
-import PlantRepository from "@/repositories/plantsRepositories";
+import PlantRepository from "../repositories/plantsRepositories";
 
 type TrefleDetails = {
   name: PlantDocument["name"],

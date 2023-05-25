@@ -1,8 +1,8 @@
 import { BaseRepository } from './baseRepository'
 
-import { PlantDocument } from '@/@types/plant';
+import { PlantDocument } from '../@types/plant';
 
-import { ERRORS_PLANTS_REPOSITORY } from '@/constants/errors'
+import { ERRORS_PLANTS_REPOSITORY } from '../constants/errors'
 
 
 class PlantsRepository extends BaseRepository<PlantDocument> {
