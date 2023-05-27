@@ -7,24 +7,19 @@ import {
 
 import { Avaliations, Contact, Summary } from './(sections)';
 
-import PlantsRepository from '@/repositories/plantsRepositories'
+import PlantsRepository from '@/repositories/plantsRepositories';
 import UsersRepository from '@/repositories/usersRepository';
 
 import ScrollEffect from '../components/ScrollEffect';
-import Apresentation from './(widgets)/Apresentation';
+import { Apresentation, Footer } from './(widgets)';
 
 import { NextLinkType } from '@/constants/paths';
 
 
 export default async function Page() {
   const plants = await PlantsRepository.getAll();
-  const users = await UsersRepository.getAll();
+  // const users = await UsersRepository.getAll();
 
-  const paths: NextLinkType[] = [
-    { label: "Home", value: "", to: "/" },
-    { label: "Our Plants", value: "", to: "products" },
-    { label: "Contact", value: "", to: "contact" },
-  ]
 
   return (
     <>
@@ -38,9 +33,9 @@ export default async function Page() {
           </div>
         </div>
         <Background />
-        <svg className="w-screen absolute z-10 top-[1000px] left-0 " viewBox="0 0 1920 443" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* <svg className="w-screen absolute z-10 top-[1000px] left-0 " viewBox="0 0 1920 443" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0H1920V299.808C1920 678.566 0 171.39 0 299.808V161.897V0Z" fill="#5D7867" />
-        </svg>
+        </svg> */}
         <ScrollEffect className='w-full h-auto' speed={0.45} initialPosition={200} finalPosition={1500}>
           <Summary />
           <Sales style={{ scrollBehavior: 'smooth' }} id="products" plants={plants} />
@@ -48,7 +43,7 @@ export default async function Page() {
           <Avaliations />
         </ScrollEffect>
       </div>
-      <footer className=""></footer>
+      <Footer className='w-screen absolute bottom-0 h-[500px] border-3 border-t-2 border-t-[#444]' />
     </>
   );
 }

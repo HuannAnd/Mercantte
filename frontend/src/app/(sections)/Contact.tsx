@@ -4,7 +4,7 @@ import { HTMLAttributes, useRef } from 'react';
 
 import Image from 'next/image';
 
-import { FONTS } from '@/constants/fonts'
+import { FONTS_STYLED } from '@/constants/fonts'
 
 import { Button, CondionTerm, FormError } from '@/components';
 
@@ -28,10 +28,18 @@ export default function Contact({ className, ...props }: ContactProps) {
 
 
   return (
-    <div {...props} className={`${className} grid shadow-[0px_0px_0px_100vmax_#8A9CA0] h-auto p-10 clip-around grid-col-1 w-full my-16 bg-secondary`}>
+    <div
+      className={`${className} grid shadow-[0px_0px_0px_100vmax_#8A9CA0] h-auto p-10 clip-around grid-col-1 w-full my-16 bg-secondary`}
+      {...props}
+    >
       <div className='grid lg:grid-cols-2 lg:grid-rows-1 my-auto sm:grid sm:grid-rows-2'>
         <div className='w-[600px] sm:mx-auto lg:order-1 sm:order-2'>
-          <h1 className={`${FONTS.H1} text-white flex-[7] mb-4`}>Stay tuned for our news</h1>
+          <h1
+            className="text-white flex-[7] mb-4"
+            style={FONTS_STYLED.h1}
+          >
+            Stay tuned for our news
+          </h1>
           <form ref={formRef} onSubmit={handleOnSubmit} className="flex-[5] w-[520px]" action="">
             <div className='mb-4'>
               <label className='mb-2 block text-white' htmlFor="user-name">First Name *</label>
@@ -79,7 +87,10 @@ export default function Contact({ className, ...props }: ContactProps) {
               <FormError error={handleFormErrors(ERRORS_CONTACT.EMPTY_CONTACT_INPUTS)} />
               <FormError error={handleFormErrors(ERRORS_CONTACT.ACCEPT_TERMS_AND_CONDITIONS)} />
               <CondionTerm onClick={handleTermCLick} >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque minima recusandae maxime sint provident adipisci autem temporibus quisquam, voluptates labore nulla excepturi
+                By checking the box, you acknowledge that you have read and understood
+                the terms of the LGPD license, and you agree to comply with its
+                conditions. If you do not agree to these terms, please refrain from
+                using our services.
               </CondionTerm>
               <FormError error={handleFormErrors(ERRORS_CONTACT.PHONE_OR_EMAIL_SIGNED)} />
             </div>

@@ -1,5 +1,8 @@
-import { TrefleBody } from "../@types/trefle";
+import verifingStatus from "@/utils/verifingStatus";
+import { TrefleBody, TrefleRetrieveBody } from "../@types/trefle";
 import TrefleHttpClient from "./TrefleHttpClient";
+
+import ProgressRepository from "@/repositories/progressRepository";
 
 import { config } from 'dotenv'
 config();
@@ -17,21 +20,27 @@ export default {
     return TrefleHttpClient.get(`${resource}/plants?token=${token}&filter[family_name]=${familyName}`);
   },
 
-  async getPLantsDetails(): Promise<{ family: string, name: string, image_url: string }[]> {
-    const trefleData = await TrefleHttpClient.get<TrefleBody>(`${resource}/plants?token=${token}`);
-    const plantsDetails = trefleData.data.map(x => {
-      return { name: x.scientific_name, family: x.family, image_url: x.image_url }
-    });
+  async getPlantById(id: number) {
+    const trefleData = await TrefleHttpClient.getResponse<TrefleRetrieveBody>(`${resource}/plants/${id}?token=${token}`);
+    console.log(trefleData.status);
 
-    return plantsDetails;
+    verifingStatus(trefleData.status);
+
+    const { scientific_name, image_url, family } = trefleData.data.data;
+
+    if (trefleData.data.data && !image_url) {
+      console.log("That plant does not contain image");
+
+      return null;
+    }
+
+    const plantDetails = {
+      name: scientific_name,
+      family: family.name,
+      image_url
+    }
+
+    return plantDetails;
   },
 
-  async getDetailsOfRandomPlant(): Promise<{ family: string, name: string, image_url: string }> {
-    const plants = await TrefleHttpClient.get<TrefleBody>(`${resource}/plants?token=${token}`);
-    const plantsDetails = plants.data.map(x => {
-      return { name: x.scientific_name, family: x.family, image_url: x.image_url }
-    });
-
-    return plantsDetails[Math.floor(Math.random() * plantsDetails.length)]
-  }
 }

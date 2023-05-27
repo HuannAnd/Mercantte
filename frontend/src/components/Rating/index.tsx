@@ -24,7 +24,7 @@ function Rating({
 
   return (
     <ul className={`${className} flex flex-row gap-2`}>
-      {parsingToArray.map((element, index) =>
+      {parsingToArray.map((_, index) =>
         <Image
           key={index}
           src={index < currentRate ? iconRateOnAction : iconRateDefault}

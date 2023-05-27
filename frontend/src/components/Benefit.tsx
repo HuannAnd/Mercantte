@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { ReactNode } from "react";
 
-import { FONTS } from "@/constants/fonts"
+import { FONTS_STYLED } from "@/constants/fonts"
 
 import { Button } from "@/components";
 
@@ -38,14 +38,14 @@ function Benefit({
         style={{ order: `${isRight ? 2 : 1}` }}
       >
         <h2
-          className={`text-dark ${FONTS.H1} leading-tight mb-4`}
-          style={{ textAlign: `${isRight ? "right" : "left"}` }}
+          className={`text-dark leading-tight mb-4`}
+          style={{ textAlign: `${isRight ? "right" : "left"}`, ...FONTS_STYLED.h1 }}
         >
           {title}
         </h2>
         <p
-          className={`text-dark-white ${FONTS.BODY} mb-8`}
-          style={{ textAlign: `${isRight ? "right" : "left"}` }}
+          className={`text-dark-white mb-8`}
+          style={{ textAlign: `${isRight ? "right" : "left"}`, ...FONTS_STYLED.body }}
         >
           {children}
         </p>
@@ -60,8 +60,8 @@ function Benefit({
           {date}
         </small>
         <Button
-          className={`${FONTS.BOLD} w-full mt-8 bg-secondary `}
-          style={isRight ? { left: 0 } : undefined}
+          className={` w-full mt-8 bg-secondary `}
+          style={isRight ? { left: 0, ...FONTS_STYLED.bold } : FONTS_STYLED.bold}
           buttonTypes="buy"
         >Learn More</Button>
       </div>

@@ -16,6 +16,8 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
 
     this.repository = new MongoClient(uri).db('mercantte');
     this.collectionName = collectionName;
+
+
   }
 
   protected async getById(id: string): Promise<TSchema | undefined> {

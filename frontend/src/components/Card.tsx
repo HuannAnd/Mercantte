@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { Button } from "@/components";
 
-import { FONTS } from '@/constants/fonts'
+import { FONTS_STYLED } from '@/constants/fonts'
 
 import { PlantDocument } from "@/@types/plant";
 
@@ -26,28 +26,38 @@ function Card({ plant, className }: CardProps) {
   } = plant;
 
   return (
-    <article className={"bg-white w-[412px] h-[280px] flex flex-row" + className} aria-label="card">
+    <article
+      className={"bg-white w-[412px] h-[280px] flex flex-row " + className}
+      aria-label="card"
+    >
       <div className="flex w-[190px] overflow-hidden">
         <Image
           className='bg-center mx-auto h-full object-cover w-full'
           src={image_url}
           alt={`Image of ${name}`}
-
           width={200}
           height={300}
         />
       </div>
-      <div className="w-[220px] p-6 shadow-2xl flex flex-col justify-between" aria-label="card info">
+      <div
+        className="w-[220px] p-6 shadow-2xl flex flex-col justify-between"
+        aria-label="card info"
+      >
         <div>
-          <h3 className={"font-inter mb-2 font-bold text-[20px] text-dark truncate max-w-xs" + FONTS.BOLD}>{name}</h3>
-          <strong className={"font-roboto block mb-4 uppercase text-[11px] tracking-widest text-dark-white"}>{family}</strong>
+          <h3
+            className="font-inter mb-2 font-bold text-[20px] text-dark truncate max-w-xs"
+            style={FONTS_STYLED.bold}
+          >
+            {name}
+          </h3>
+          <strong className="font-roboto block mb-4 uppercase text-[11px] tracking-widest text-dark-white">{family}</strong>
           <p className="card__preview-text text-dark-white text-[12px] w-full overflow-hidden h-auto">{description}</p>
         </div>
         <Link href={`/plants/${_id}?plant_id=${_id}`}>
           <Button className="w-full bg-secondary border-none" buttonTypes="buy">Learn More</Button>
         </Link>
       </div>
-    </article>
+    </article >
   )
 }
 

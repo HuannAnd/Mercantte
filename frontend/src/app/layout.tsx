@@ -3,6 +3,7 @@ import './globals.css';
 import { ReactNode } from "react";
 
 import { Inter, Roboto } from "next/font/google";
+import Footer from './(widgets)/Footer';
 
 const roboto = Roboto({
   weight: ["400"],

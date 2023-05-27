@@ -1,14 +1,66 @@
 "use client";
 
-export default function Footer() {
+import { FONTS_STYLED } from "@/constants/fonts";
 
+
+type FooterProps = React.HTMLAttributes<HTMLDivElement> & {
+  children?: React.ReactNode
+}
+
+export default function Footer({
+  children,
+  ...props
+}: FooterProps) {
+  const navigation = [
+    "Home",
+    "Our Plants",
+    "Contact"
+  ]
+
+  const contacts = [
+    { isLink: false, label: "huannvicente14@outlook.com" },
+    { isLink: true, label: "https://github.com/HuannAnd" }
+  ]
 
   return (
-    <footer className="absolute bottom-0 h-[200px] w-screen">
-      <svg className="w-screen absolute z-10 left-0 rotate-180" viewBox="0 0 1920 443" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0H1920V299.808C1920 678.566 0 171.39 0 299.808V161.897V0Z" fill="#5D7867" />
-      </svg>
-      <div>
+    <footer {...props}>
+      <div className="w-[1280px] pt-20 mx-auto h-full text-dark grid grid-cols-3 grid-rows-5 gap-x-2 ">
+        <article className="row-span-4 col-span-1">
+          <h2
+            className="text-dark"
+            style={FONTS_STYLED.h2}
+          >Navigation</h2>
+          <ul>
+            {navigation.map((link, index) => (
+              <li key={index} className="text-dark-white hover:brightness-75 text-[20px] cursor-pointer">{link}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="row-span-4 col-span-1">
+          <h2
+            className="text-dark"
+            style={FONTS_STYLED.h2}
+          >Contact</h2>
+          <ul>
+            {contacts.map((link, index) => (
+              <li
+                key={index}
+                className="text-dark-white hover:brightness-75 text-[20px] cursor-pointer"
+                style={link.isLink ? { textDecoration: "underline" } : {}}
+              >{link.label}</li>
+            ))}
+          </ul>
+        </article>
+        <div className="clip-around shadow-[0_0_0_100vmax_#5D7867] row-span-1 col-span-3 bg-primary flex flex-cols items-center justify-center h-32">
+          <h2
+            className="text-white"
+            style={FONTS_STYLED.bold}
+          ></h2>
+          <p
+            className="text-white"
+            style={FONTS_STYLED.body}
+          >© 2023 HuannAnd. Todos os direitos reservados.</p>
+        </div>
       </div>
     </footer>
   )

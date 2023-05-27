@@ -31,19 +31,6 @@ class UserRepository extends BaseRepository<UserDocument> {
     throw new Error("Email and phone is does not exist");
   }
 
-  // Podemos fazer o seguinte se tivesse uma forma de cadastrar os usuários e ter um campo para avaliações, seria interessante pegar os usuários que são avaliadores e mostrar na home page.
-  // public async getAllAvaliators(): Promise<UserDocument[]> {
-  //   const users = await super.getAll();
-
-  //   function isAvaliator(user: UserAvaliator): boolean {
-  //     return !!user.isAvaliator;
-  //   }
-
-  //   const avaliators = users.filter(isAvaliator);
-
-  //   return avaliators;
-  // }
-
   public getById(id: string): Promise<UserDocument | undefined> {
     const user = super.getById(id);
     return user;
