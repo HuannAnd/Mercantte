@@ -48,20 +48,13 @@ async function addNewPlantToMongoDB(trefleDetails: TrefleDetails, description: s
 }
 
 let requestCounter = 0;
-const requestLimit = 10;
 
 export default async function addingNewPlantToMongoDB(): Promise<void> {
   requestCounter++
   console.log('Entering addingNewPlantToMongoDB function');
   console.log(`This is: ${requestCounter}th request`);
 
-  await controllingRequests(requestCounter);
-  // if (requestCounter == requestLimit) {
-
-
-
-  //   throw new Error("The request limit was reached");
-  // }
+  await controllingRequests(requestCounter, 10);
 
   const progress = await ProgressRepository.getProgress();
   console.log('Retrieved progress: ', progress);

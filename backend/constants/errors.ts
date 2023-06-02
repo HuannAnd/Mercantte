@@ -1,3 +1,5 @@
+import { SCHEDULE_TIME } from "./schedule"
+
 enum ERRORS_CONTACT {
   PHONE_OR_EMAIL_SIGNED = "The phone or email has been signed",
   CONNECT_TO_DATABASE = "Error to connect with database, please try again later",
@@ -12,6 +14,11 @@ enum ERRORS_CONTACT {
 
 enum ERRORS_DATABASE {
   CONNECTION = "Error to connect with database"
+}
+
+enum ERRORS_HOSTED_SERVICE {
+  COULDNT_FIND = "Couldn't find Species with",
+  LIMIT_REQUESTS_EXCEDEED = `The next execution can only be done in ${SCHEDULE_TIME} minutes`
 }
 
 enum ERRORS_PLANTS_REPOSITORY {
@@ -30,6 +37,7 @@ export {
   ERRORS_CONTACT,
   ERRORS_DATABASE,
   ERRORS_PLANTS_REPOSITORY,
-  ERRORS_USERS_REPOSITORY
+  ERRORS_USERS_REPOSITORY,
+  ERRORS_HOSTED_SERVICE
 }
 

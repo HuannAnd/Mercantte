@@ -2,6 +2,10 @@ import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, 
 
 import { BaseDocument } from '../@types/common'
 
+import { config } from "dotenv";
+
+config();
+
 
 export abstract class BaseRepository<TSchema extends BaseDocument> {
   protected repository: Db;

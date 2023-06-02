@@ -5,10 +5,10 @@ import Image from "next/image";
 
 type PlantImageProps = {
   image: string;
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
-const PlantImage = ({ image }: PlantImageProps) => (
-  <article className="w-[665px] h-[715px] bg-white flex overflow-y-hidden justify-center items-center p-16">
+const PlantImage = ({ image, ...props }: PlantImageProps) => (
+  <article  {...props}>
     <Suspense fallback={<div>Carregando...</div>}>
       <Image
         className="w-full h-full object-cover bg-blend-multiply mix-blend-multiply"

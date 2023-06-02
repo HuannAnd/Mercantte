@@ -27,7 +27,7 @@ function Card({ plant, className }: CardProps) {
 
   return (
     <article
-      className={"bg-white w-[412px] h-[280px] flex flex-row " + className}
+      className={`bg-white w-[412px] h-[280px] flex flex-row ${className}`}
       aria-label="card"
     >
       <div className="flex w-[190px] overflow-hidden">

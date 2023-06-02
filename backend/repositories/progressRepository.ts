@@ -1,6 +1,7 @@
 import { BaseRepository } from "./baseRepository";
 
-import { ProgressDocument } from "@/@types/progress";
+import { ProgressDocument } from "../@types/progress";
+import { SCHEDULE_TIME } from "../constants/schedule";
 
 class ProgressRepository extends BaseRepository<ProgressDocument> {
   constructor() {
@@ -23,8 +24,10 @@ class ProgressRepository extends BaseRepository<ProgressDocument> {
   }
 
   async canBeStarted(): Promise<boolean> {
-    const time = new Date().getHours();
+    const time = Date.now();
+    console.log(time);
     const timeOnDatabase = (await super.getAll({ key: 'plant' }))[0].time;
+    console.log(timeOnDatabase);
 
     if (time < timeOnDatabase) {
       return false
@@ -34,8 +37,8 @@ class ProgressRepository extends BaseRepository<ProgressDocument> {
   }
 
   async createRuntimeSchedule() {
-    const time = new Date().getTime();
-    const newTime = time + 20 * 60 * 1000; // 20 minutes 
+    const timeNow = new Date().getTime();
+    const newTime = timeNow + SCHEDULE_TIME * 60 * 1000;
 
     await this.update({ key: "plant" }, { $set: { time: newTime } })
 

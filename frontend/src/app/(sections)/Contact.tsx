@@ -4,17 +4,21 @@ import { HTMLAttributes, useRef } from 'react';
 
 import Image from 'next/image';
 
-import { FONTS_STYLED } from '@/constants/fonts'
+import { FONTS_STYLED } from '@/constants/fonts';
+import { ERRORS_CONTACT } from '@/constants/errors';
 
 import { Button, CondionTerm, FormError } from '@/components';
 
 import { useContactForm } from '@/hooks/useContactForm';
-import { ERRORS_CONTACT } from '@/constants/errors';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 
 type ContactProps = HTMLAttributes<HTMLDivElement>
 
 export default function Contact({ className, ...props }: ContactProps) {
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+
   const {
     isSubmitting,
     formRef,
@@ -25,6 +29,11 @@ export default function Contact({ className, ...props }: ContactProps) {
     handleTermCLick,
     handleFormErrors
   } = useContactForm();
+
+  const [
+    isVisualized1,
+    isVisualized2,
+  ] = useIntersectionObserver(nameRef, emailRef);
 
 
   return (
@@ -44,13 +53,19 @@ export default function Contact({ className, ...props }: ContactProps) {
             <div className='mb-4'>
               <label className='mb-2 block text-white' htmlFor="user-name">First Name *</label>
               <input
+                ref={nameRef}
                 name='user-name'
                 type="text"
                 maxLength={20}
                 aria-label='name input'
                 onChange={handleInputName}
-                className='block px-5 py-3 w-full rounded-lg'
+                className='block px-5 py-3 w-full rounded-lg duration-1000'
                 placeholder='First Name'
+                style={{
+                  transform: `translateX(${isVisualized1 ? 0 : -100}%)`,
+                  opacity: `${isVisualized1 ? 1 : 0}`,
+                  filter: `blur(${isVisualized1 ? 0 : 10}px)`
+                }}
               />
               <FormError error={handleFormErrors(ERRORS_CONTACT.EMPTY_NAME_INPUT)} />
             </div>
@@ -58,14 +73,20 @@ export default function Contact({ className, ...props }: ContactProps) {
               <div className='col-span-2'>
                 <label className='mb-2 text-white' htmlFor="user-email">Email Address</label>
                 <input
+                  ref={emailRef}
                   name='user-email'
                   aria-label='email input'
                   maxLength={50}
                   onChange={handleInputEmail}
                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                  className='mt-2 px-5 py-3 w-full rounded-lg'
+                  className='mt-2 px-5 py-3 w-full rounded-lg duration-1000'
                   placeholder="name@mail.com"
                   type="email"
+                  style={{
+                    transform: `translateX(${isVisualized1 ? 0 : -100}%)`,
+                    opacity: `${isVisualized1 ? 1 : 0}`,
+                    filter: `blur(${isVisualized1 ? 0 : 10}px)`
+                  }}
                 />
                 <FormError error={handleFormErrors(ERRORS_CONTACT.WRONG_EMAIL_FORMAT)} />
               </div>
@@ -74,11 +95,16 @@ export default function Contact({ className, ...props }: ContactProps) {
                 <input
                   name='user-phone'
                   aria-label='phone input'
-                  className='mt-2 px-5 py-3 w-full rounded-lg'
+                  className='mt-2 px-5 py-3 w-full rounded-lg duration-1000 delay-200'
                   onChange={handleInputPhone}
                   placeholder="(99) 9 9999-9999"
                   maxLength={11}
                   type="tel"
+                  style={{
+                    transform: `translateX(${isVisualized1 ? 0 : -100}%)`,
+                    opacity: `${isVisualized1 ? 1 : 0}`,
+                    filter: `blur(${isVisualized1 ? 0 : 10}px)`
+                  }}
                 />
                 <FormError error={handleFormErrors(ERRORS_CONTACT.WRONG_PHONE_FORMAT)} />
               </div>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { ReactNode } from "react";
+import { CSSProperties, ForwardedRef, ReactNode, forwardRef, useTransition } from "react";
 
 import { FONTS_STYLED } from "@/constants/fonts"
 
@@ -13,39 +13,55 @@ type BenefitProps = {
   isRight?: boolean,
   imageIndex?: string,
   title: string,
+  isVisualized?: boolean,
   children: ReactNode,
   date: string,
-  theme?: 'dark' | 'light'
+} & React.HTMLAttributes<HTMLDivElement>
 
-}
-
-function Benefit({
+const Benefit = forwardRef<HTMLDivElement, BenefitProps>(({
   isRight = false,
   imageIndex = "1",
+  isVisualized,
   title,
   children,
   date,
-  theme = 'light'
-}: BenefitProps) {
-  const orderClass = isRight ? 'order-2' : 'order-1';
-  const alignmentClass = isRight ? 'text-right' : '';
+  className,
+  ...props
+}: BenefitProps, ref: ForwardedRef<HTMLDivElement>) => {
+  const paragraphRefEffect: CSSProperties = ref ? {
+    transform: `translateX(${isVisualized ? 0 : 50}%)`,
+    filter: `blur(${isVisualized ? 0 : 10}px)`,
+    opacity: `${isVisualized ? 1 : 0}`
+  } : {};
+
+  const buttonRefEffect: CSSProperties = ref ? {
+    transform: `translateX(${isVisualized ? 0 : 100}%)`,
+    opacity: `${isVisualized ? 1 : 0}`
+  } : {};
 
 
   return (
-    <article className="lg:flex lg:flex-row gap-[135px]">
+    <article ref={ref} className={`${className} lg:flex lg:flex-row gap-[135px]`} {...props}>
       <div
         className={`w-[600px] relative`}
         style={{ order: `${isRight ? 2 : 1}` }}
       >
         <h2
-          className={`text-dark leading-tight mb-4`}
-          style={{ textAlign: `${isRight ? "right" : "left"}`, ...FONTS_STYLED.h1 }}
+          className="text-dark leading-tight mb-4 duration-1000"
+          style={{
+            textAlign: `${isRight ? "right" : "left"}`,
+            ...FONTS_STYLED.h1,
+          }}
         >
           {title}
         </h2>
         <p
-          className={`text-dark-white mb-8`}
-          style={{ textAlign: `${isRight ? "right" : "left"}`, ...FONTS_STYLED.body }}
+          className={`text-dark-white mb-8 duration-1000`}
+          style={{
+            textAlign: `${isRight ? "right" : "left"}`,
+            ...FONTS_STYLED.body,
+            ...paragraphRefEffect
+          }}
         >
           {children}
         </p>
@@ -60,17 +76,21 @@ function Benefit({
           {date}
         </small>
         <Button
-          className={` w-full mt-8 bg-secondary `}
-          style={isRight ? { left: 0, ...FONTS_STYLED.bold } : FONTS_STYLED.bold}
+          className="duration-1000 w-full mt-8 bg-secondary"
+          style={isRight ? { left: 0, ...FONTS_STYLED.bold, ...buttonRefEffect } : { ...FONTS_STYLED.bold, ...buttonRefEffect }}
           buttonTypes="buy"
         >Learn More</Button>
       </div>
       <div
-        className={`w-[630px] h-[700px] relative scale-90`}
+        className={`w-[630px] h-[700px] relative flex flex-row justify-center items-center scale-90`}
         style={{ order: `${isRight ? 1 : 2}` }}
       >
         <Image
-          className="w-full h-full object-cover top-1/2 -translate-x-1/2 absolute left-1/2 -translate-y-1/2"
+          className="w-full h-full object-cover duration-1000"
+          style={ref ? {
+            transform: `translateX(${isVisualized ? 0 : -50}%)`,
+            opacity: `${isVisualized ? '1' : '0'}`
+          } : undefined}
           src={`/icons/benefit-image${imageIndex}.jpg`}
           alt="Benefit image"
           width={300}
@@ -79,8 +99,8 @@ function Benefit({
         />
       </div>
     </article>
-  )
-}
+  );
+});
 
 export default Benefit;
 

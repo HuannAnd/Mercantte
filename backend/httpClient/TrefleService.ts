@@ -1,10 +1,9 @@
-import verifingStatus from "@/utils/verifingStatus";
-import { TrefleBody, TrefleRetrieveBody } from "../@types/trefle";
+import handleTrefleErrorRequest from "../utils/handleTrefleErrorRequest";
+import { TrefleRetrieveBody } from "../@types/trefle";
 import TrefleHttpClient from "./TrefleHttpClient";
 
-import ProgressRepository from "@/repositories/progressRepository";
-
 import { config } from 'dotenv'
+import axios, { AxiosError } from "axios";
 config();
 
 const token = process.env.NEXT_PUBLIC_API_TREFLE_KEY
@@ -21,26 +20,39 @@ export default {
   },
 
   async getPlantById(id: number) {
-    const trefleData = await TrefleHttpClient.getResponse<TrefleRetrieveBody>(`${resource}/plants/${id}?token=${token}`);
-    console.log(trefleData.status);
+    console.log("getPlanyById executed");
+    try {
+      const trefleData = await TrefleHttpClient.get<TrefleRetrieveBody>(`${resource}/plants/${id}?token=${token}`)
+      console.log(trefleData);
 
-    verifingStatus(trefleData.status);
+      if (!trefleData) {
+        throw new Error("TrefleData does not exist");
+      }
 
-    const { scientific_name, image_url, family } = trefleData.data.data;
+      const { scientific_name, image_url, family } = trefleData.data;
 
-    if (trefleData.data.data && !image_url) {
-      console.log("That plant does not contain image");
+      if (!image_url) {
+        console.log("That plant does not contain image");
 
-      return null;
+        return null;
+      }
+
+      const plantDetails = {
+        name: scientific_name,
+        family: family.name,
+        image_url
+      }
+
+      return plantDetails;
+
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response && axiosError.response.data) {
+        await handleTrefleErrorRequest(axiosError);
+      }
+
+      console.log(axiosError);
     }
-
-    const plantDetails = {
-      name: scientific_name,
-      family: family.name,
-      image_url
-    }
-
-    return plantDetails;
   },
-
 }

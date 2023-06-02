@@ -8,6 +8,11 @@ export interface TrefleRetrieveBody {
   meta: Meta
 }
 
+export interface TrefleErrorBody {
+  error: boolean,
+  message: string
+}
+
 export interface PlantData {
   id: number
   common_name: string

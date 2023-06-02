@@ -1,12 +1,10 @@
-import ProgressRepository from "@/repositories/progressRepository";
+import { ERRORS_HOSTED_SERVICE } from "../constants/errors";
+import ProgressRepository from "../repositories/progressRepository";
 
-const requestLimit = 10;
-
-export default async function controllingRequests(requestNum: number) {
+export default async function controllingRequests(requestNum: number, requestLimit: number) {
   if (requestNum >= requestLimit) {
     await ProgressRepository.createRuntimeSchedule();
 
-    throw new Error("The next execution can only be done in 20 minutes");
-
+    throw new Error(ERRORS_HOSTED_SERVICE.LIMIT_REQUESTS_EXCEDEED);
   }
 }
