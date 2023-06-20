@@ -8,6 +8,8 @@ import { Button } from "@/components";
 import { FONTS_STYLED } from '@/constants/fonts'
 
 import { PlantDocument } from "@/@types/plant";
+import useLoad from "@/hooks/useLoad";
+import { useRef } from "react";
 
 
 type CardProps = {
@@ -25,14 +27,28 @@ function Card({ plant, className }: CardProps) {
     description,
   } = plant;
 
+  const imageRef = useRef<HTMLImageElement>(null!);
+  const { handleImageLoad, isLoaded } = useLoad(imageRef);
+
+
   return (
     <article
       className={`bg-white w-[412px] h-[280px] flex flex-row ${className}`}
       aria-label="card"
     >
-      <div className="flex w-[190px] overflow-hidden">
+      <div
+        className={`flex w-[190px] overflow-hidden relative`}
+      >
+        {!isLoaded && (
+          <div className="flex justify-center items-center h-full absolute w-full">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-gray-900"></div>
+          </div>
+        )}
         <Image
-          className='bg-center mx-auto h-full object-cover w-full'
+          className={`bg-center mx-auto h-full object-cover w-full duration-1000 ${isLoaded ? "opacity-100 blur-0" : "opacity-0 blur"}`}
+          onLoad={handleImageLoad}
+          ref={imageRef}
+          loading="lazy"
           src={image_url}
           alt={`Image of ${name}`}
           width={200}
@@ -40,7 +56,7 @@ function Card({ plant, className }: CardProps) {
         />
       </div>
       <div
-        className="w-[220px] p-6 shadow-2xl flex flex-col justify-between"
+        className="w-[220px] p-6 flex flex-col justify-between"
         aria-label="card info"
       >
         <div>

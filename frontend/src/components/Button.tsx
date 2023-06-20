@@ -16,7 +16,7 @@ export default function Button({
   className,
   ...props
 }: ButtonProps) {
-  let defaultClassName = "border-2 border-white text-white px-4 py-2";
+  let defaultClassName = "text-white px-4 py-2";
 
   if (defaultClassName === "callToAction") {
     defaultClassName = "bg-primary border-secondary border-2 text-white duration-300 px-4 py-2 hover:bg-transparent hover:text-secondary"

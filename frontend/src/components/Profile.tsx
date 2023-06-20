@@ -26,7 +26,7 @@ export function Profile({
         <div className="bg-primary w-full rounded-full overflow-hidden">
           {!!image ? (
             <Image
-              className="object-cover w-full h-full "
+              className="object-cover w-full aspect-square bg-center"
               src={image}
               alt=""
 

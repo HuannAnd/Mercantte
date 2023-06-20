@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, use } from "react";
+import { useEffect, useState } from "react";
 
 
 export function useIntersectionObserver(...refs: React.MutableRefObject<null | Element>[]) {
@@ -12,8 +12,7 @@ export function useIntersectionObserver(...refs: React.MutableRefObject<null | E
     };
 
     const observer = new IntersectionObserver((entries) => {
-      const visibilityArray = entries.map((entry) => entry.isIntersecting);
-      console.log(visibilityArray);
+      const visibilityArray = entries.map((entry) => entry.isIntersecting); 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           observer.unobserve(entry.target);
