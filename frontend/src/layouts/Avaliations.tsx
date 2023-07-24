@@ -12,12 +12,12 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export default function Avaliations() {
   const avaliationRef = useRef(null);
-''
+
   const [isVisualized] = useIntersectionObserver(avaliationRef);
 
   return (
-    <section
-      ref={avaliationRef}
+      <section
+        ref={avaliationRef}
       id='avaliations'
       className="w-full block duration-1000 h-auto mb-20"
       style={{ opacity: `${isVisualized ? '1' : '0'}` }}

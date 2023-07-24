@@ -33,8 +33,6 @@ class PlantsRepository extends BaseRepository<PlantDocument> {
   }
 
   public async getAll(): Promise<PlantDocument[]> {
-
-
     return super.getAll();
   }
 
