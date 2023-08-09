@@ -19,8 +19,8 @@ module.exports = {
         light: "#fff",
       },
       colors: {
-        primary: "#5D7867",
-        secondary: "#8A9CA0",
+        primary: "#506d3a",
+        secondary: "#7d8f69",
       },
       boxShadow: {
         main: "0 0 10vw #392D2E",

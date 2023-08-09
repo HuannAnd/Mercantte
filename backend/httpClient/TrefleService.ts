@@ -1,7 +1,9 @@
-import { TrefleBody } from "../@types/trefle";
+import handleTrefleErrorRequest from "../utils/handleTrefleErrorRequest";
+import { TrefleRetrieveBody } from "../@types/trefle";
 import TrefleHttpClient from "./TrefleHttpClient";
 
 import { config } from 'dotenv'
+import axios, { AxiosError } from "axios";
 config();
 
 const token = process.env.NEXT_PUBLIC_API_TREFLE_KEY
@@ -17,21 +19,40 @@ export default {
     return TrefleHttpClient.get(`${resource}/plants?token=${token}&filter[family_name]=${familyName}`);
   },
 
-  async getPLantsDetails(): Promise<{ family: string, name: string, image_url: string }[]> {
-    const trefleData = await TrefleHttpClient.get<TrefleBody>(`${resource}/plants?token=${token}`);
-    const plantsDetails = trefleData.data.map(x => {
-      return { name: x.scientific_name, family: x.family, image_url: x.image_url }
-    });
+  async getPlantById(id: number) {
+    console.log("getPlanyById executed");
+    try {
+      const trefleData = await TrefleHttpClient.get<TrefleRetrieveBody>(`${resource}/plants/${id}?token=${token}`)
+      console.log(trefleData);
 
-    return plantsDetails;
+      if (!trefleData) {
+        throw new Error("TrefleData does not exist");
+      }
+
+      const { scientific_name, image_url, family } = trefleData.data;
+
+      if (!image_url) {
+        console.log("That plant does not contain image");
+
+        return null;
+      }
+
+      const plantDetails = {
+        name: scientific_name,
+        family: family.name,
+        image_url
+      }
+
+      return plantDetails;
+
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response && axiosError.response.data) {
+        await handleTrefleErrorRequest(axiosError);
+      }
+
+      console.log(axiosError);
+    }
   },
-
-  async getDetailsOfRandomPlant(): Promise<{ family: string, name: string, image_url: string }> {
-    const plants = await TrefleHttpClient.get<TrefleBody>(`${resource}/plants?token=${token}`);
-    const plantsDetails = plants.data.map(x => {
-      return { name: x.scientific_name, family: x.family, image_url: x.image_url }
-    });
-
-    return plantsDetails[Math.floor(Math.random() * plantsDetails.length)]
-  }
 }

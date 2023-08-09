@@ -1,6 +1,10 @@
-import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId, OptionalId } from "mongodb";
+import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, ObjectId, OptionalId, UpdateFilter } from "mongodb";
 
 import { BaseDocument } from '../@types/common'
+
+import { config } from "dotenv";
+
+config();
 
 
 export abstract class BaseRepository<TSchema extends BaseDocument> {
@@ -49,5 +53,13 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     if (!notSerializedPlant) return undefined;
 
     return { ...notSerializedPlant, _id: notSerializedPlant._id.toString() } as TSchema;
+  }
+
+  public async update(filter: Filter<TSchema>, newValue: UpdateFilter<TSchema>) {
+    const collection = this.repository.collection(this.collectionName);
+
+    const result = await collection.updateOne(filter as Filter<Document>, newValue);
+
+    console.log(`${result.modifiedCount} document(s) updated`);
   }
 }

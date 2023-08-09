@@ -22,7 +22,19 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 10px;
+  overflow-x: hidden;
+  /* overflow-y: hidden; */
+  /* cursor: none; */
 }
+
+html::-webkit-scrollbar {
+  width: 0;
+}
+/* 
+* {
+  cursor: none;
+} */
 
 a {
   scroll-behavior: smooth;

@@ -4,6 +4,13 @@ export default function useCollapseEffect(show: number) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleOnCLick = () => {
+    if (isCollapsed) {
+      const productsSection = document.getElementById('products');
+
+      if (productsSection) {
+        productsSection.scrollIntoView();
+      }
+    }
     setIsCollapsed(isCollapsed => !isCollapsed);
   }
 

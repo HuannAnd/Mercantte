@@ -1,7 +1,4 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { error, log } from 'console';
-import { FetchEventResult } from 'next/dist/server/web/types';
-import { NextFetchEvent, NextResponse } from 'next/server';
 
 export class BaseHttpClient {
   private http: AxiosInstance;

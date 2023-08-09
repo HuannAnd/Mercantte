@@ -1,24 +1,21 @@
 import cron from "node-cron";
 
-import addingNewPlantToMongoDB from "./utils/addingNewPlantToMongoDb";
+import handleHostedService from "./utils/handleHostedService";
 
-const minutesToPlant = 5;
-let remainingMinutes = minutesToPlant;
+
+const timeToExecute = 3;
+let remainingMinutes = timeToExecute;
 
 console.log("Program is running");
 
 cron.schedule("0-59 * * * *", () => {
-  const syncFuntion = async () => {
-    await addingNewPlantToMongoDB();
-  }
-
   if (remainingMinutes === 0) {
     console.log('Executed');
 
-    syncFuntion();
-    remainingMinutes = minutesToPlant;
-  } else {
-    console.log(`Missing ${remainingMinutes} minutes to add a new plant`);
-    remainingMinutes--;
+    handleHostedService();
+    remainingMinutes = timeToExecute;
   }
+
+  console.log(`Missing ${remainingMinutes} minutes to add a new plant`);
+  remainingMinutes--;
 });

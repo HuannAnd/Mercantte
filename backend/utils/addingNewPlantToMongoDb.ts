@@ -4,6 +4,8 @@ import OpenAIHttpService from "../httpClient/OpenAiHttpService";
 import TrefleService from "../httpClient/TrefleService";
 
 import PlantRepository from "../repositories/plantsRepositories";
+import ProgressRepository from "../repositories/progressRepository";
+import controllingRequests from "./controllingRequests";
 
 type TrefleDetails = {
   name: PlantDocument["name"],
@@ -24,6 +26,14 @@ async function createGptPlantDetails(name: string): Promise<[string, string, str
   return [description, careDetails, irrigationDetails];
 }
 
+async function getTreflePlantDetails(id: number) {
+  const plantDetails = await TrefleService.getPlantById(id);
+
+  if (!plantDetails) return null;
+
+  return plantDetails;
+}
+
 async function addNewPlantToMongoDB(trefleDetails: TrefleDetails, description: string, careDetails: string, irrigationDetails: string): Promise<void> {
   const newPlant = {
     name: trefleDetails.name,
@@ -37,17 +47,38 @@ async function addNewPlantToMongoDB(trefleDetails: TrefleDetails, description: s
   await PlantRepository.add(newPlant);
 }
 
+let requestCounter = 0;
 
 export default async function addingNewPlantToMongoDB(): Promise<void> {
-  const trefleDetails = await TrefleService.getDetailsOfRandomPlant();
-  console.log('Trefle plant details:', trefleDetails);
+  requestCounter++
+  console.log('Entering addingNewPlantToMongoDB function');
+  console.log(`This is: ${requestCounter}th request`);
+
+  await controllingRequests(requestCounter, 10);
+
+  const progress = await ProgressRepository.getProgress();
+  console.log('Retrieved progress: ', progress);
+
+  const trefleDetails = await getTreflePlantDetails(progress);
+  console.log('Retrieved Trefle plant details: ', trefleDetails);
+
+  if (!trefleDetails) {
+    console.log('Trefle plant details not found. Updating progress and retrying...');
+
+    await ProgressRepository.updateProgress();
+
+    await addingNewPlantToMongoDB();
+    return;
+  }
 
   const exist = await checkIfPlantExists(trefleDetails.name);
   if (exist) {
     console.log("That Plant already exists");
 
+    await ProgressRepository.updateProgress();
+
     await addingNewPlantToMongoDB();
-    return
+    return;
   }
 
   const [description, careDetails, irrigationDetails] = await createGptPlantDetails(trefleDetails.name);
@@ -56,4 +87,7 @@ export default async function addingNewPlantToMongoDB(): Promise<void> {
 
   await addNewPlantToMongoDB(trefleDetails, description, careDetails, irrigationDetails);
   console.log('Successfully added new plant to MongoDB');
+  console.clear();
+  console.log("Current progress: " + (progress + 1));
+  requestCounter = 0;
 }

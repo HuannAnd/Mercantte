@@ -3,6 +3,16 @@ export interface TrefleBody {
   meta: Meta
 }
 
+export interface TrefleRetrieveBody {
+  data: PlantData,
+  meta: Meta
+}
+
+export interface TrefleErrorBody {
+  error: boolean,
+  message: string
+}
+
 export interface PlantData {
   id: number
   common_name: string
@@ -19,7 +29,7 @@ export interface PlantData {
   vegetable: boolean
   image_url: string
   genus: string
-  family: string
+  family: Family
   duration: any
   edible_part: string[]
   edible: boolean
