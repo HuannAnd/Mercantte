@@ -17,11 +17,10 @@ type FamilyPlantsProps = {
 export default function FamilyPlants({
   plants
 }: FamilyPlantsProps) {
-  if (plants.length === 0) return null
-
   const sectionRef = useRef(null);
-
   const [isVisualized] = useIntersectionObserver(sectionRef)
+
+  if (plants.length === 0) return null
 
   return (
     <section

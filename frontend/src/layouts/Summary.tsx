@@ -23,14 +23,14 @@ export default function Summary(props: SummaryProps) {
         imageIndex={3}
       >
         Copyright © 2023 Your Plant Paradise. All rights reserved.
-        Unlock the wonders of the botanical world with our extensive collection of over 200 plants. Combining the trusted Trefle API with OpenAI's power, we offer a reliable and intelligent resource.
+        Unlock the wonders of the botanical world with our extensive collection of over 200 plants. Combining the trusted Trefle API with OpenAI&apos;s power, we offer a reliable and intelligent resource.
         <br />
         <br />
-        Immerse yourself in greenery's captivating embrace, browse our curated plant profiles with grace. From delicate blooms to majestic trees, find detailed care instructions that put you at ease.
+        Immerse yourself in greenery&apos;s captivating embrace, browse our curated plant profiles with grace. From delicate blooms to majestic trees, find detailed care instructions that put you at ease.
         Our collaboration ensures data accuracy, providing up-to-date knowledge for your botany journey. Trust in our expertise and reputable sources, as you cultivate your own lush plant oasis.
         <br />
         <br />
-        Start your adventure today, embrace nature's art, with Your Plant Paradise as your trusted counterpart. Discover the beauty and benefits plants bring, as we help you create a vibrant, thriving haven within.
+        Start your adventure today, embrace nature&apos;s art, with Your Plant Paradise as your trusted counterpart. Discover the beauty and benefits plants bring, as we help you create a vibrant, thriving haven within.
         <br />
         <br />
         <strong>Note:</strong> This revised version maintains the core message and highlights the collaboration between Trefle API and OpenAI, while also emphasizing the reliability and expertise of Your Plant Paradise in providing a comprehensive plant resource.
