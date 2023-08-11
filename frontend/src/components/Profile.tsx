@@ -28,8 +28,7 @@ export default function Profile({
             <Image
               className="object-cover w-full aspect-square bg-center"
               src={image}
-              alt=""
-
+              alt="A Random User"
               width={48}
               height={48}
             />

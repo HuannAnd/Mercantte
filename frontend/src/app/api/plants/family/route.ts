@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import PlantsRepositories from "@/services/repositories/PlantsRepositories"
 
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url!);
   const family_name = searchParams.get("family_name");
   console.log(family_name);
