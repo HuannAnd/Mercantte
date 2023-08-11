@@ -19,7 +19,7 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     }
 
     this.repository = new MongoClient(uri).db('mercantte');
-    console.log('uri',uri)
+    console.log('uri', uri)
     this.client = new MongoClient(uri);
     this.collectionName = collectionName;
   }
@@ -30,7 +30,9 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
       await this.client.connect();
       console.log('connection opened')
       var repository = this.client.db('mercantte')
-      return await action(repository)
+      const data = await action(repository)
+      await this.client.close();
+      return data
     } catch (error) {
       const err = error as Error
 
@@ -45,17 +47,17 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
 
   protected async getById(id: string): Promise<TSchema | undefined> {
     const _id = new ObjectId(id);
-    
+
     var result = await this.getData<TSchema | undefined>(async (dataBase: Db) => {
       console.log('inside getData', dataBase)
       const collection = dataBase.collection<TSchema>(this.collectionName);
       const result = await collection.findOne({ _id } as Filter<TSchema>);
-  
+
       return this.serialize(result);
     });
-    
+
     console.log('result', result)
-    
+
     return result;
 
     // const collection = this.repository.collection<TSchema>(this.collectionName);
@@ -68,13 +70,13 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     var result = await this.getData<TSchema[]>(async (database: Db) => {
       const collection = database.collection<TSchema>(this.collectionName);
       console.log("collection: ", collection);
-      
+
 
       const data = await collection.find(filter as Filter<Document>, options).toArray();
-      console.log('data: ',data)
-      
-      const serialized =  data.map(x => this.serialize(x)!)
-      console.log('serialized: ', serialized)
+      console.log('getted the data ')
+
+      const serialized = data.map(x => this.serialize(x)!)
+      console.log('serialized: ')
       return serialized
     })
 
