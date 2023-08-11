@@ -39,7 +39,9 @@ const Navbar = dynamic(
 )
 
 export default async function Page() {
+  await PlantsRepository.createLifetimeConnection()
   const plants = await PlantsRepository.getAll();
+  await PlantsRepository.closeLifetimeConnection()
 
   return (
     <>

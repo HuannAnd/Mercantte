@@ -28,8 +28,10 @@ export default async function PlantsPage({
 }) {
   const { plant_id } = searchParams;
 
+  await PlantsRepository.createLifetimeConnection()
   const data = await PlantsRepository.getById(plant_id as string);
   const commonFamilyPlants = await PlantsRepository.getAllByFamilyName(data.family);
+  await PlantsRepository.closeLifetimeConnection()
 
   return (
     // <div className="flex flex-col w-[1280px] max-w-[1280px] mx-auto font-inter">
