@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, HTMLAttributes } from 'react';
-import { Avaliations, Contact, Summary } from '@/app/(sections)'
+
 import { useScrollEffect } from '@/hooks';
 
 

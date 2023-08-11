@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import PlantsRepository from "@/repositories/plantsRepositories";
-import TrefleService from "@/httpClient/TrefleService";
+import PlantsRepository from "@/services/repositories/PlantsRepositories";
+import TrefleService from "@/services/httpClient/TrefleService";
 
 // TODO: Iniciar a ideia do POST para o banco de dados
 export async function GET(request: Request) {

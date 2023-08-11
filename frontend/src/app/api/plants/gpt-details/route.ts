@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 
 import findParam from "@/utils/findParam";
 
-import OpenAiHttpService from "@/httpClient/OpenAiHttpService";
-import PlantRepository from "@/repositories/plantsRepositories";
+import OpenAiHttpService from "@/services/httpClient/OpenAiHttpService";
+import PlantRepository from "@/services/repositories/PlantsRepositories";
 
 // Para pegar a response: /api/plants/gpt-copyright?plant_name=avenca;
 export async function GET(request: NextApiRequest) {

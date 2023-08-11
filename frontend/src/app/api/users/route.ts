@@ -1,4 +1,4 @@
-import UserRepository from "@/repositories/usersRepository";
+import UserRepository from "@/services/repositories/UsersRepository";
 
 import { NextResponse } from "next/server";
 

@@ -1,4 +1,4 @@
-import PlantsRepository from "@/repositories/plantsRepositories";
+import PlantsRepository from "@/services/repositories/PlantsRepositories";
 
 import ScrollEffect from "@/components/ScrollEffect";
 
@@ -32,9 +32,10 @@ export default async function PlantsPage({
   const commonFamilyPlants = await PlantsRepository.getAllByFamilyName(data.family);
 
   return (
-    <div className="flex flex-col w-[1280px] max-w-[1280px] mx-auto font-inter">
-      <Navbar className="border-b-white mb-8 border-b-2 z-20" />
-      <Breadcrumb className="mb-8 px-4 z-20 lg:w-auto lg:mx-0 sm:mx-auto sm:block" currentRoute={data.name} />
+    // <div className="flex flex-col w-[1280px] max-w-[1280px] mx-auto font-inter">
+    <>
+      {/* <Navbar className="border-b-white mb-8 border-b-2 z-20" /> */}
+      <Breadcrumb className="mb-8 px-4 z-20 mt-[20vh] lg:w-auto lg:mx-0 sm:mx-auto sm:block" currentRoute={data.name} />
       <div className="w-screen absolute z-10 left-0 top-0 ">
         <div className="w-full lg:h-[600px] sm:h-[450px] bg-primary after:absolute after:top-20 after:content-[''] after:bg-primary after:left-0 after:right-0 after:bottom-0 " />
         <svg className="z-30 lg:hidden md:hidden sm:visible" viewBox="0 0 1920 444" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,6 +46,8 @@ export default async function PlantsPage({
         <PlantSection plant={data} />
         <FamilyPlants plants={commonFamilyPlants} />
       </ScrollEffect>
-    </div>
+    </>
+
+    // </div>
   );
 }

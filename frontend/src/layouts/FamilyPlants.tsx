@@ -1,10 +1,14 @@
 "use client";
 
-import { PlantDocument } from "@/@types/plant";
-import { Carousel } from "@/components";
-import { FONTS_STYLED, } from "@/constants/fonts";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useRef } from "react";
+
+import { PlantDocument } from "@/@types/plant";
+
+import Carousel from "@/components/Carousel";
+
+import { FONTS_STYLED, } from "@/constants/fonts";
+
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 type FamilyPlantsProps = {
   plants: PlantDocument[]
@@ -22,7 +26,7 @@ export default function FamilyPlants({
   return (
     <section
       ref={sectionRef}
-      className="h-auto clip-around mt-20 n z-10"
+      className="h-auto clip-around mt-20 z-10"
     >
       <div className="p-10 text-center">
         <h2

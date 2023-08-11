@@ -1,4 +1,4 @@
-import TrefleService from "@/httpClient/TrefleService";
+import TrefleService from "@/services/httpClient/TrefleService";
 
 import { NextResponse } from "next/server";
 

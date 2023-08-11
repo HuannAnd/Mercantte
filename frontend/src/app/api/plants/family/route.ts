@@ -2,7 +2,7 @@ import { NextApiRequest } from "next"
 
 import { NextResponse } from "next/server";
 
-import PlantsRepositories from "@/repositories/plantsRepositories"
+import PlantsRepositories from "@/services/repositories/PlantsRepositories"
 
 
 export async function GET(request: NextApiRequest) {

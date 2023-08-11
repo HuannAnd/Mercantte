@@ -7,7 +7,10 @@ import Image from 'next/image';
 import { FONTS_STYLED } from '@/constants/fonts';
 import { ERRORS_CONTACT } from '@/constants/errors';
 
-import { Button, CondionTerm, FormError } from '@/components';
+// import { Button, CondionTerm, FormError } from '@/components';
+import Button from '@/components/Button';
+import ConditionTerm from '@/components/CondionTerm';
+import FormError from '@/components/FormError';
 
 import { useContactForm } from '@/hooks/useContactForm';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
@@ -123,15 +126,15 @@ export default function Contact({ className, ...props }: ContactProps) {
             </div>
             <div className='mb-8'>
               <FormError error={handleFormErrors(ERRORS_CONTACT.ACCEPT_TERMS_AND_CONDITIONS)} />
-              <CondionTerm onClick={handleTermCLick} >
+              <ConditionTerm onClick={handleTermCLick} >
                 By checking the box, you acknowledge that you have read and understood
                 the terms of the LGPD license, and you agree to comply with its
                 conditions. If you do not agree to these terms, please refrain from
                 using our services.
-              </CondionTerm>
+              </ConditionTerm>
               <FormError error={handleFormErrors(ERRORS_CONTACT.PHONE_OR_EMAIL_SIGNED)} />
             </div>
-            <Button disabled={isSubmitting} className='w-full bg-primary disabled:brightness-75' buttonTypes='callToAction'>
+            <Button disabled={isSubmitting} className='w-full bg-primary disabled:brightness-75' variant='cta'>
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </form>
@@ -139,7 +142,7 @@ export default function Contact({ className, ...props }: ContactProps) {
         <div aria-label='items' className='flex-[1] relative sm:order-1 lg:order-2 md:order-1'>
           <div className='bg-primary w-[216px] h-[281px] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2'>
             <div
-              className={`absolute w-[215px] h-[215px] bg-center object-cover top-[129px] right-[96px] bg-cover `}
+              className="absolute w-[215px] h-[215px] bg-center object-cover top-[129px] right-[96px] bg-cover"
               style={{ backgroundImage: `url(/benefits/fallback/4.jpg)` }}
             >
               <Image

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export class BaseHttpClient {
-  private http: AxiosInstance;
+  protected http: AxiosInstance;
 
   constructor(baseUri: string) {
     this.http = axios.create({

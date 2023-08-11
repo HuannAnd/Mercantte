@@ -1,4 +1,4 @@
-import { BaseRepository } from "./baseRepository";
+import { BaseRepository } from "./BaseRepository";
 
 import { UserDocument, User } from "@/@types/user";
 

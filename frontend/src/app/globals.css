@@ -24,7 +24,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 10px;
   overflow-x: hidden;
-  /* overflow-y: hidden; */
+  overflow-y: scroll;
   /* cursor: none; */
 }
 

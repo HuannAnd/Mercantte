@@ -15,7 +15,7 @@ export default function Apresentation(props: ApresentationProps) {
 
 
   return (
-    <div {...props}>
+    <div className="flex-[1] relative lg:order-2 md:order-1 sm:order-1">
       <div
         className="bg-secondary duration-1000 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl w-[220px] h-[250px] "
         ref={apresentationRef}

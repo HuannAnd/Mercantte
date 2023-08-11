@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import { BaseRepository } from './baseRepository'
+import { BaseRepository } from './BaseRepository'
 
 import { PlantDocument } from '@/@types/plant';
 

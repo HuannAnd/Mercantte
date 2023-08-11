@@ -1,6 +1,5 @@
 import { ERRORS_CONTACT } from "@/constants/errors";
 import { FONTS_STYLED } from "@/constants/fonts";
-import { NULL } from "sass";
 
 
 type ErrorProps = React.HTMLAttributes<HTMLSpanElement> & {

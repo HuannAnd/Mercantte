@@ -1,5 +1,5 @@
-import PlantsRepository from '@/repositories/plantsRepositories';
-import UsersRepository from '@/repositories/usersRepository';
+import PlantsRepository from '@/services/repositories/PlantsRepositories';
+import UsersRepository from '@/services/repositories/UsersRepository';
 
 import ScrollEffect from '../components/ScrollEffect';
 
@@ -42,13 +42,12 @@ export default async function Page() {
   const plants = await PlantsRepository.getAll();
 
   return (
-    <div className="flex flex-col w-[1280px] max-w-[1280px] mx-auto font-inter">
-      <div className="w-full h-auto h-min-[600px] bg-primary/60 backdrop-blur-md z-10 before:bg-primary before:w-full before:h-auto before:content-none before:absolute before:left-0 before:top-0 before:mix-blend-difference before:backdrop-blur">
-        <Navbar isHommed className="border-b-2 fixed  border-b-white" />
+    <>
+      <div className="w-full h-auto h-min-[600px] pt-[10vh] bg-primary/60 backdrop-blur-md z-10 before:bg-primary before:w-full before:h-auto before:content-none before:absolute before:left-0 before:top-0 before:mix-blend-difference before:backdrop-blur">
         <div className="grid lg:grid-cols-2 lg:grid-rows-1 md:grid-cols-1 md:grid-rows-2 relative">
           <div className="absolute w-[219px] h-[251px] bg-secondary -translate-x-1/2 left-0 bottom-10 " />
-          <Hero className="md:mx-auto w-[500px] h-auto lg-order-1 md:order-2 sm:order-2  items-start left-0 text-white top-0 z-20 mt-[55px]" />
-          <Apresentation className="flex-[1] relative lg:order-2 md:order-1 sm:order-1 " />
+          <Hero />
+          <Apresentation />
         </div>
       </div>
       <Background />
@@ -58,6 +57,6 @@ export default async function Page() {
         <Contact id="contact" />
         <Avaliations />
       </ScrollEffect>
-    </div>
+    </>
   );
 }

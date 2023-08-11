@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 
-import { Benefit } from "@/components";
+import Benefit from "@/components/Benefit";
 
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
@@ -16,7 +16,7 @@ export default function Summary(props: SummaryProps) {
   return (
     <section {...props} className="flex flex-col w-full h-auto mt-[86px] gap-[200px] mb-16">
       <Benefit
-        className={`justify-between`}
+        className="justify-between"
         title="All Rights Reserved - Your Plant Paradise"
         date="January, 23 of may"
         key={1}
@@ -36,7 +36,7 @@ export default function Summary(props: SummaryProps) {
         <strong>Note:</strong> This revised version maintains the core message and highlights the collaboration between Trefle API and OpenAI, while also emphasizing the reliability and expertise of Your Plant Paradise in providing a comprehensive plant resource.
       </Benefit>
       <Benefit
-        className={`justify-between`}
+        className="justify-between"
         ref={benefitRef}
         title="Why we want inovatte the seeds comerce"
         isVisualized={isVisualized}
