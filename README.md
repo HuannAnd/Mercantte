@@ -7,19 +7,25 @@ The idea to build this project is build an website using the modern tools as **F
 
 ## Some of observations about this Website
 
-1 - Contact form doesn't work, i might 
+1 - Contact not notify me if you, would like to contact
 
 2 - The website don't carry all datas about plants around the world, there specifics plants, becaus it isnt possible, thus i don't have money to portable **Huge Datas**
 
-## Contact 
+3 - The plants informations aren't reviewed by a professional, all of those text's are created by ChatGPT automatically
+
+## Contact / Feedback ✌
 This project is a part of my portifolio, so, i'll be happy if you could me a feedback about this project, code, structure or anything.
 
-Email-me: 
+Email-me: [huannvicent14@outlook.com](mailto:huannvicente14@outlook.com)
 
 Connect with me at [Linkedin](https://www.linkedin.com/in/huann-vicente-5092a9261/)
 
-## Functionalaties 🎉
+## Technologies
 
+- **Framewok:** Next.js
+- **Database:** MongoDb
+- **Container:** Docker
+- **CSS:** Tailwindcss
 
 ## Production 
 

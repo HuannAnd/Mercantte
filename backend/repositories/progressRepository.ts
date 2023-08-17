@@ -1,4 +1,4 @@
-import { BaseRepository } from "./baseRepository";
+import { BaseRepository } from "./BaseRepository";
 
 import { ProgressDocument } from "../@types/progress";
 import { SCHEDULE_TIME } from "../constants/schedule";

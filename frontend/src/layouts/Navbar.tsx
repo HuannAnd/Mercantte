@@ -25,7 +25,7 @@ export default function NavBar({
   ];
 
   return (
-    <nav className={cn("border-b-2 bg-blend-darken left-1/2 -translate-x-1/2 top-0 mx-auto z-[999] fixed w-full max-w-[1280px] border-b-white h-auto p-10 text-white flex flex-row justify-between")}>
+    <nav className={cn("bg-blend-darken left-1/2 bg-black/20 backdrop-blur-sm clip-around shadow-[0_0_0_100vmax_rgba(0,0,0,.2)] -translate-x-1/2 top-0 mx-auto z-[999] fixed w-full max-w-[1280px] border-b-white h-auto p-10 text-white flex flex-row justify-between")}>
       <div className="">
         <h2 className="text-[24px] mix-blend-difference text-white font-@bold">Mercantte</h2>
       </div>

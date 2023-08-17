@@ -3,15 +3,11 @@ import { MongoClient, Db, Document, Filter, FindOptions, WithId, DeleteOptions, 
 import { BaseDocument } from '@/@types/common'
 import { Collection } from "mongoose";
 
-interface Func<T, TResult> {
-  (obj: T): TResult;
-}
 
 export abstract class BaseRepository<TSchema extends BaseDocument> {
   protected repository: Collection<TSchema> | null;
   protected client: MongoClient;
   protected collectionName: string;
-
   constructor(collectionName: string) {
     const uri = process.env.NEXT_PUBLIC_MONGODB_URL;
 
@@ -24,7 +20,6 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     console.log('uri', uri)
     this.client = new MongoClient(uri);
   }
-
   public async createLifetimeConnection() {
     await this.client.connect();
     this.repository = this.client.db('mercantte').collection<TSchema>(this.collectionName) as any
@@ -33,7 +28,6 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
     await this.client.close();
     this.repository = null
   }
-
   protected async getById(id: string): Promise<TSchema | undefined> {
     if (!this.repository) return
 
@@ -42,21 +36,17 @@ export abstract class BaseRepository<TSchema extends BaseDocument> {
 
     return this.serialize(plant)
   }
-
   protected async getAll(filter?: Filter<TSchema>, options?: FindOptions<TSchema>): Promise<TSchema[]> {
     const plants = await (this.repository!).find(filter as Filter<Document>, options).toArray();
 
     return plants.map(x => this.serialize(x)!)
   }
-
   protected async add(data: TSchema | OptionalId<TSchema>): Promise<void> {
     await (this.repository!).insertOne(data as any)
   }
-
   protected async delete(filter: Filter<TSchema>, options?: DeleteOptions) {
     await (this.repository!).deleteOne(filter as Filter<Document>, options);
   }
-
   private serialize(notSerializedPlant?: WithId<Document> | WithId<TSchema> | null): TSchema | undefined {
     if (!notSerializedPlant) return undefined;
 

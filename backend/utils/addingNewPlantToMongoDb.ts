@@ -3,7 +3,7 @@ import { PlantDocument } from "../@types/plant";
 import OpenAIHttpService from "../httpClient/OpenAiHttpService";
 import TrefleService from "../httpClient/TrefleService";
 
-import PlantRepository from "../repositories/plantsRepositories";
+import PlantRepository from "../repositories/PlantsRepositories";
 import ProgressRepository from "../repositories/progressRepository";
 import controllingRequests from "./controllingRequests";
 
