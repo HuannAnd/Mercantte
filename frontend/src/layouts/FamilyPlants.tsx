@@ -1,10 +1,14 @@
 "use client";
 
-import { PlantDocument } from "@/@types/plant";
-import { Carousel } from "@/components";
-import { FONTS_STYLED, } from "@/constants/fonts";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useRef } from "react";
+
+import { PlantDocument } from "@/@types/plant";
+
+import Carousel from "@/components/Carousel";
+
+import { FONTS_STYLED, } from "@/constants/fonts";
+
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 type FamilyPlantsProps = {
   plants: PlantDocument[]
@@ -13,16 +17,15 @@ type FamilyPlantsProps = {
 export default function FamilyPlants({
   plants
 }: FamilyPlantsProps) {
-  if (plants.length === 0) return null
-
   const sectionRef = useRef(null);
-
   const [isVisualized] = useIntersectionObserver(sectionRef)
+
+  if (plants.length === 0) return null
 
   return (
     <section
       ref={sectionRef}
-      className="h-auto clip-around mt-20 n z-10"
+      className="h-auto clip-around mt-20 z-10"
     >
       <div className="p-10 text-center">
         <h2

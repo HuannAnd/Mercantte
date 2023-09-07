@@ -3,6 +3,8 @@ import Image from "next/image";
 import starAction from '@/assets/starAction.svg';
 import starPreview from '@/assets/starPreview.svg';
 
+import cn from "@/utils/cn";
+
 
 type RatingProps = {
   maxRate?: number,
@@ -19,12 +21,9 @@ function Rating({
   className,
   ...props
 }: RatingProps) {
-  const parsingToArray = Array(maxRate).fill('');
-
-
   return (
-    <ul className={`${className} flex flex-row gap-2`}>
-      {parsingToArray.map((_, index) =>
+    <ul className={cn(className, "flex flex-row gap-2")}>
+      {Array.from({ length: maxRate }, (_, index) => (
         <Image
           key={index}
           src={index < currentRate ? iconRateOnAction : iconRateDefault}
@@ -32,7 +31,7 @@ function Rating({
           width={10}
           height={10}
         />
-      )}
+      ))}
     </ul>
   )
 }

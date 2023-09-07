@@ -4,36 +4,37 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { Card } from '@/components';
+import Card from '@/components/Card';
 
 import { PlantDocument } from '@/@types/plant';
+import { VariantProps, cva } from 'class-variance-authority';
+
+import cn from '@/utils/cn';
 
 
+const carouselVariants = cva(
+  "w-full relative",
+  {
+    variants: {
+      variant: {
+        default: "w-auto",
+        single: "w-[412px]",
+        multiple: "w-[824px]"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  },
+)
 
-type CarouselProps = {
+interface CarouselProps extends VariantProps<typeof carouselVariants> {
   plants: PlantDocument[],
   className?: string
 }
 
-function NextArrow() {
-  return <div className='aspect-square h-[10px] bg-black'>-</div>
-}
-
-export default function Carousel({ plants, className }: CarouselProps) {
+export default function Carousel({ plants, variant, className }: CarouselProps) {
   const slidesToShow = plants.length >= 3 ? 3 : plants.length;
-
-  let config = "w-auto";
-
-  if (slidesToShow === 1) {
-    config = "w-[412px]";
-  }
-
-  if (slidesToShow === 2) {
-    config = "w-[824px]";
-  }
-
-  console.log(slidesToShow);
-  
 
   const settings = {
     dots: false,
@@ -44,17 +45,14 @@ export default function Carousel({ plants, className }: CarouselProps) {
     centerPadding: "20px",
     autoplay: true,
     autoplaySpeed: 3000,
-    // fade: isMobile,
     arrows: true,
-    // centerMode: isMobile,
-
   }
 
   if (plants.length === 0) return null
 
   return (
     <Slider
-      className={`${className} ${config} w-full relative`}
+      className={cn(carouselVariants({ variant, className }))}
       {...settings}
     >
       {plants.map((plant: PlantDocument, index: number) => {

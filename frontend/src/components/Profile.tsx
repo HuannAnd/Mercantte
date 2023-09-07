@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { Rating } from "@/components";
+import Rating from "@/components/Rating";
 import { FONTS_STYLED } from "@/constants/fonts";
 
 import { PersonIcon } from '@radix-ui/react-icons'
@@ -15,7 +15,7 @@ type ProfileProps = {
 
 }
 
-export function Profile({
+export default function Profile({
   user
 }: ProfileProps) {
   const { comment, name, email, rate, image, date } = user;
@@ -28,8 +28,7 @@ export function Profile({
             <Image
               className="object-cover w-full aspect-square bg-center"
               src={image}
-              alt=""
-
+              alt="A Random User"
               width={48}
               height={48}
             />
@@ -41,13 +40,13 @@ export function Profile({
         <div className="p-2">
           <h3
             aria-label="Name"
-            className={`text-dark`}
+            className="text-dark"
           >
             {name}
           </h3>
           <p
             aria-label="Email"
-            className={`text-dark-white mb-4`}
+            className="text-dark-white mb-4"
             style={FONTS_STYLED.small}
           >
             {email}
@@ -56,10 +55,10 @@ export function Profile({
         </div>
       </div>
       <div className="flex-[1] p-2 grid grid-rows-[1fr_auto] gap-y-2">
-        <p
-          className={`h-full text-ellipsis line-clamp-3 overflow-hidden text-dark`}
+        <q
+          className="h-full text-ellipsis line-clamp-3 overflow-hidden text-dark"
           style={FONTS_STYLED.body}
-        >"{comment}"</p>
+        >{comment}</q>
         <small className="text-right text-dark-white">{formatDate(date)}</small>
       </div>
     </article>

@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 
-import { Profile } from "@/components";
+import Profile from "@/components/Profile";
 
 import { FONTS_STYLED } from "@/constants/fonts";
 import avaliators from "@/constants/avaliators";
@@ -16,25 +16,23 @@ export default function Avaliations() {
   const [isVisualized] = useIntersectionObserver(avaliationRef);
 
   return (
-      <section
-        ref={avaliationRef}
+    <section
+      ref={avaliationRef}
       id='avaliations'
       className="w-full block duration-1000 h-auto mb-20"
       style={{ opacity: `${isVisualized ? '1' : '0'}` }}
     >
       <div className="p-10">
         <h2
-          className="text-center text-dark duration-1000"
+          className="text-center text-dark duration-1000 text-@h1 font-@h1"
           style={{
-            transform: `translateY(${isVisualized ? 0 : -100}%)`,
-            ...FONTS_STYLED.h1
+            transform: `translateY(${isVisualized ? 0 : -100}%)`
           }}
         >Avaliations</h2>
         <p
-          className='text-dark-white text-center'
+          className='text-dark-white text-center text-@body font-@body'
           style={{
-            transform: `translateY(${isVisualized ? 0 : -100}%)`,
-            ...FONTS_STYLED.body
+            transform: `translateY(${isVisualized ? 0 : -100}%)`
           }}
         >Hear What Our Clients Have to Say!</p>
       </div>
