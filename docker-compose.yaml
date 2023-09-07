@@ -1,17 +1,28 @@
 version: "3.3"
 
 services:
-  mongodb:
-    image : mongo
-    container_name: lab-mongodb
-    environment:
-      - PUID=1000
-      - PGID=1000
-    #volumes:
-    #  - mongodata:/data/db
-    ports:  
-      - 27017:27017
-    restart: unless-stopped
+  # mongodb:
+  #   image : mongo
+  #   container_name: lab-mongodb
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #   #volumes:
+  #   #  - mongodata:/data/db
+  #   ports:  
+  #     - 27017:27017
+  #   restart: unless-stopped
+  next-app: 
+    container_name: next-app
+    image: next-js-image
+    ports:
+      - 3000:3000  
+  app: 
+    container_name: plant-generator
+    image: node-ts-image
+    ports:
+      - 5001:5001
+    
 
   # mysql:
   #   image: mysql:latest
